@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Clipping & Masking Example</title>
+  <style>
+    .circle {
+      width: 200px; height: 200px;
+      background: url('https://picsum.photos/300') no-repeat center/cover;
+
+      clip-path: circle(50% at 50% 50%);
+
+      margin: 20px auto;
+    }
+
+    .polygon {
+      width: 200px; height: 200px;
+      background: url('https://picsum.photos/301') no-repeat center/cover;
+
+      clip-path: polygon(0 0, 50% 0, 80% 50%, 20% 50%);
+
+      margin: 20px auto;
+    }
+
+    .masked-text {
+      font-size: 60px;
+      font-weight: bold;
+      background: linear-gradient(180deg, red, blue);
+      -webkit-background-clip: text;
+      color: transparent;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Clipping & Masking</h1>
+  <div class="circle">
+
+  </div>
+  <div class="polygon">
+
+  </div>
+  <div class="masked-text">Gradient Text</div>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pseudo-classes Examples</title>
+  <style>
+    /* 1. :hover - style when mouse is over */
+    .hover-example:hover {
+      color: white;
+      background-color: darkblue;
+      cursor: pointer;
+    }
+
+    /* 2. :active - style when element is clicked */
+    .active-example:active {
+      transform: scale(0.95);
+      background-color: darkred;
+      color: white;
+    }
+
+    /* 3. :focus - style when input is focused */
+    input:focus {
+      border: 2px solid green;
+      outline: none;
+      background-color: #f0fff0;
+    }
+
+    /* 4. :visited - style visited links */
+    a:visited {
+      color: purple;
+    }
+
+    /* 5. :link - style unvisited links */
+    a:link {
+      color: blue;
+    }
+
+    /* 6. :first-child - first child of parent */
+    ul li:first-child {
+      font-weight: bold;
+      color: rgb(0, 255, 13);
+    }
+
+    /* 7. :last-child - last child of parent */
+    ul li:last-child {
+      font-style: italic;
+      font-family: 'Courier New', Courier, monospace;
+      color: rgb(128, 0, 0);
+    }
+
+    /* 8. :nth-child(n) - select nth child */
+    ul li:nth-child(2) {
+      background-color: #00d9ff;
+    }
+
+    /* 9. :nth-of-type(n) - select nth of its type */
+    p:nth-of-type(2) {
+      color: red;
+      background-color: blue;
+      font-weight: bold;
+    }
+
+    /* 10. :not(selector) - everything except selector */
+    p:not(.special) {
+      color: gray;
+    }
+
+    /* 11. :disabled - disabled input/button */
+    input:disabled, button:disabled {
+      background-color: lightgray;
+      color: darkgray;
+      cursor: not-allowed;
+    }
+
+    /* 12. :checked - checked checkbox/radio */
+    input:checked + label {
+      font-weight: bold;
+      color: green;
+    }
+
+    /* 13. :empty - element with no children */
+    div:empty {
+      border: 1px dashed red;
+      padding: 10px;
+      background-color: black;
+    }
+
+    /* 14. :root - root element (HTML) */
+    :root {
+      --main-color: darkcyan;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      line-height: 1.5;
+    }
+
+    .example {
+      margin-bottom: 20px;
+    }
+
+    ul {
+      list-style-type: disc;
+      margin-left: 20px;
+    }
+
+    button {
+      padding: 5px 10px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <h1>Pseudo-classes Full Example</h1>
+
+  <div class="example hover-example">Hover over me!</div>
+
+  <div class="example active-example">Click me!</div>
+
+  <div class="example">
+    <input type="text" placeholder="Focus on me!">
+  </div>
+
+  <div class="example">
+    <a href="https://example1234.com">Unvisited Link</a> |
+    <a href="https://thehalfbrick.com" target="_blank">Visited Link</a>
+  </div>
+
+  <ul class="example">
+    <li>First Child</li>
+    <li>Second Child</li>
+    <li>Third Child</li>
+    <li>4 Child (Last)</li>
+  </ul>
+
+  <p class="example">Paragraph 1</p>
+  <p class="example">Paragraph 2 (nth-of-type)</p>
+  <p class="example special">Special Paragraph (not affected by :not)</p>
+
+  <div class="example">
+    <input type="text" disabled placeholder="Disabled input">
+    <button disabled>Disabled Button</button>
+  </div>
+
+  <div class="example">
+    <input type="checkbox" id="chk1">
+    <label for="chk1">Check me</label>
+  </div>
+
+    <div class="example">
+    <input type="checkbox" id="chk2">
+    <label for="chk2">Check  me 2</label>
+  </div>
+
+  <div class="example"></div> <!-- empty div to show :empty -->
+
+  <p>Root element color example using var(--main-color): <span style="color: var(--main-color)">Text in root color</span></p>
+
+</body>
+</html>

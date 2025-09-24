@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Positioning Example</title>
+  <style>
+    body { height: 1500px; margin: 0; font-family: Arial; }
+
+    .relative {
+      position: relative;
+      top: 20px;
+      left: 20px;
+      background: lightblue;
+      padding: 15px;
+    }
+
+    .absolute {
+      position: absolute;
+      top: 100px;
+      right: 20px;
+      background: lightgreen;
+      padding: 15px;
+    }
+
+    .sticky {
+      position: sticky;
+      top: 30px;
+      background: orange;
+      padding: 15px;
+    }
+
+    .fixed {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background: red;
+      color: white;
+      padding: 10px;
+      z-index: 1000;
+    }
+
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      margin: 50px;
+    }
+
+    .tooltip .tip {
+      display: none;
+      position: absolute;
+      top: 30px;
+      left: 0;
+      background: black;
+      color: white;
+      padding: 5px;
+      border-radius: 4px;
+    }
+
+    .tooltip:hover .tip { display: block; }
+
+    .z-index{
+      z-index: 100;
+    }
+  </style>
+</head>
+<body>
+  <div class="sticky">Sticky Header (stays while scrolling)</div>
+  
+  <div class="relative">Relative Box</div>
+
+  <div class="absolute" style="background-color: aqua;">
+    Absolute Box
+  </div>
+
+  <br/>
+
+  <div class="relative " style="background-color: rgba(165, 42, 42, 0.781);">
+      <p>Relative Box</p>
+      <div class="absolute">Absolute Box</div>
+  </div>
+
+  
+
+  <div class="tooltip">
+    Hover me
+    <div class="tip">Tooltip text</div>
+  </div>
+
+  <div class="sticky" style="background-color: rgb(13, 255, 1);">I'm Sticky</div>
+
+  <p style="margin-top:500px;">Scroll down to see the fixed button.</p>
+  <div class="fixed">Fixed Button</div>
+</body>
+</html>

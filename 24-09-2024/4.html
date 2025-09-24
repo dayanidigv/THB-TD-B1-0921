@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Attribute Selectors Example</title>
+  <style>
+    /* 1. [attribute] - Select elements with the attribute */
+    [title] {
+      color: darkblue;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    /* 2. [attribute="value"] - Select elements with exact attribute value */
+    [type="text"] {
+      border: 2px solid green;
+      padding: 10px;
+    }
+
+    /* 3. [attribute~="value"] - Select elements where attribute contains a word (space-separated) */
+    [class~="highlight"] {
+      background-color: yellow;
+    }
+
+    /* 4. [attribute|="value"] - Select elements where attribute starts with value followed by "-" */
+    [lang|="en"] {
+      font-weight: bolder;
+      background-color: blue;
+    }
+
+    /* 5. [attribute^="value"] - Select elements where attribute value starts with string */
+    [href^="https"] {
+      color: green;
+      text-decoration: solid;
+    }
+
+
+    /* 6. [attribute$="value"] - Select elements where attribute value ends with string */
+    [src$="300"] {
+      border: 5px solid red;
+    }
+
+    [src$="301"] {
+      border: 5px solid royalblue;
+    }
+
+    /* 7. [attribute*="value"] - Select elements where attribute contains substring */
+    [name*="user"] {
+      background-color: yellow;
+      padding: 3px;
+    }
+
+    /* 8. [disabled] - Select disabled elements */
+    input[disabled] {
+      background-color: lightgray;
+      cursor: not-allowed;
+    }
+
+    input[required] {
+      background-color: red;
+    }
+
+    /* Extra styling */
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      line-height: 1.5;
+    }
+
+    .example {
+      margin-bottom: 20px;
+    }
+
+    input, button {
+      padding: 5px;
+      margin: 5px 0;
+    }
+
+    img {
+      width: 100px;
+      margin: 5px 0;
+    }
+
+  </style>
+</head>
+<body>
+
+  <h1>CSS Attribute Selectors Example</h1>
+
+  <div class="example" title="This is a tooltip">
+    This div has a title attribute.
+  </div>
+
+  <div class="example">
+
+    <input type="text" placeholder="Text input">
+
+    <input type="password" placeholder="Password input">
+
+  </div>
+
+  <div class="example">
+
+    <p class="highlight">This paragraph has a class "highlight".</p>
+
+    <p class="note highlight">This paragraph has multiple classes including "highlight".</p>
+
+  </div>
+
+  <div class="example" lang="en-US">
+
+    This div has lang attribute starting with "en".
+
+  </div>
+
+  <div class="example">
+
+    <a href="https://example.com">Secure Link</a>
+    <a href="http://example.com">Non-Secure Link</a>
+
+  </div>
+
+  <div class="example">
+
+    <img src="https://picsum.photos/301" alt="Image 1">
+    <img src="https://picsum.photos/300" alt="Image 2">
+
+  </div>
+
+  <div class="example" disabled>
+    <input type="text" name="username" placeholder="User name">
+    <input type="text" name="emailfromuser" placeholder="User email">
+  </div>
+
+
+  <div class="example">
+    <input type="text" placeholder="Disabled input" disabled>
+  </div>
+
+  <div class="example">
+    <input type="text" placeholder="Required input" required>
+  </div>
+
+</body>
+</html>

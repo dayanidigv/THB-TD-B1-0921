@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pseudo-elements Examples</title>
+  <style>
+    /* 1. ::before - Add content before an element */
+    .before-example::before {
+      content: "";
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      color: red;
+      background-color: chartreuse;
+      font-weight: bold;
+    }
+
+    .box{
+      width: 50px;
+      height: 50px;
+      color: red;
+      background-color: chartreuse;
+      font-weight: bold;
+    }
+
+    /* 2. ::after - Add content after an element */
+    .after-example::after {
+      content: " ✅";
+      color: green;
+      font-weight: bold;
+    }
+
+    /* 3. ::first-letter - Style first letter of a paragraph */
+    .first-letter-example::first-letter {
+      font-size: 2em;
+      color: blue;
+      font-weight: bold;
+      background-color: chartreuse;
+    }
+
+    /* 4. ::first-line - Style first line of a paragraph */
+    .first-line-example::first-line {
+      font-style: italic;
+      color: purple;
+      background-color: chartreuse;
+    }
+
+    /* 5. ::selection - Style selected text */
+    ::selection {
+      background: rgb(34, 255, 0);
+      color: black;
+    }
+
+    /* 6. ::placeholder - Style input placeholder */
+    input::placeholder {
+      color: rgb(255, 0, 0);
+      font-style: italic;
+    }
+
+    /* 7. ::marker - Style list item marker */
+    ul li::marker {
+      color: rgb(255, 0, 0);
+      font-size: 1.2em;
+    }
+
+    /* 8. ::backdrop - Style full-screen element backdrop (like <dialog>) */
+    dialog::backdrop {
+      background-color: rgba(213, 20, 20, 0.5);
+    }
+
+    /* 9. ::cue - Style WebVTT captions/subtitles */
+    ::cue {
+      color: yellow;
+      background-color: rgba(0,0,0,0.7);
+      font-size: 1.2em;
+    }
+
+    /* 10. ::part - Style shadow DOM parts exposed by web components */
+    my-button::part(label) {
+      color: white;
+      background-color: darkblue;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+
+    /* Extra styling */
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      line-height: 1.5;
+    }
+
+    .example {
+      margin-bottom: 20px;
+    }
+
+    input {
+      padding: 5px;
+      margin-top: 5px;
+    }
+
+    ul {
+      list-style-type: disc;
+      margin-left: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Pseudo-elements Full Example</h1>
+
+  <div class="example before-example">
+    Before pseudo-element example text.
+  </div>
+
+    <div class="example" style="margin-top: 50px ;">
+
+      <div class="box" style="display: inline-block;"> </div>
+
+     pseudo-element example text.
+
+      <div class="box" style="display: inline-block;"> </div>
+
+  </div>
+
+
+  <div class="example after-example">
+    After pseudo-element example text.
+  </div>
+
+  <p class="example first-letter-example">
+    Paragraph demonstrates the first-letter pseudo-element. Notice the large blue "T".
+  </p>
+
+  <p class="example first-line-example">
+    This paragraph demonstrates the first-line pseudo-element. 
+    <br/>
+    Only the first line is italic and purple.
+  </p>
+
+  <p class="example">
+    Try selecting this text to see the <code>::selection</code> pseudo-element effect.
+  </p>
+
+  <div class="example">
+    <input type="text" placeholder="This is a placeholder">
+  </div>
+
+  <ul class="example">
+    <li>List item 1</li>
+    <li>List item 2</li>
+    <li>List item 3</li>
+  </ul>
+
+  <div class="example">
+    <dialog>
+      Dialog content. ::backdrop pseudo-element styles the background overlay.
+    </dialog>
+  </div>
+
+  <div class="example">
+    <video controls width="300">
+      <source src="https://gist.githubusercontent.com/samdutton/ca37f3adaf4e23679957b8083e061177/raw/e19399fbccbc069a2af4266e5120ae6bad62699a/sample.vtt" type="text/vtt">
+      Your browser does not support the video tag.
+    </video>
+    <p>Subtitles/captions will use <code>::cue</code> styles.</p>
+  </div>
+
+  <!-- Web Component Example -->
+  <click-me></click-me>
+
+  <script>
+
+    // Simple web component using shadow DOM
+    class MyButton extends HTMLElement {
+      constructor() {
+        super();
+        const shadow = this.attachShadow({ mode: 'open' });
+        const btn = document.createElement('button');
+        btn.setAttribute('part', 'label');
+        btn.setAttribute('onclick', "alert('Hi')")
+        btn.textContent = "Click Me";
+        shadow.appendChild(btn);
+      }
+    }
+
+    customElements.define('click-me', MyButton);
+  </script>
+
+</body>
+</html>

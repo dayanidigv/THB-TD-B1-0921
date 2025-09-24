@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Responsive Design Example</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: white;
+    }
+
+    .box {
+      padding: 20px;
+      background: lightblue;
+    }
+
+    /* Tablet */
+    @media screen and (min-width: 600px) {
+      .box { background-color: lightgreen; font-size: 20px; }
+    }
+
+
+    /* Desktop */
+    @media screen and (min-width: 1024px) {
+      .box { background: lightcyan; font-size: 24px; }
+    }
+
+    /* Dark mode */
+    @media (prefers-color-scheme: dark) {
+      body { background: #121212 ; color: white; }
+      .box { background: darkslategray; }
+    }
+
+    /* Print */
+    @media print {
+      body { background: white !important; color: black; }
+      nav, footer { display: none; } /* Hide navigation in print */
+    }
+  </style>
+</head>
+<body>
+  <h1>Responsive Design</h1>
+
+  <nav>
+    <a href="#">
+        <p>Link</p>
+    </a>
+  </nav>
+
+  <div class="box">Resize window / print page / enable dark mode</div>
+
+  <footer>
+    <p>- daya @ 2025</p>
+  </footer>
+
+</body>
+</html>
