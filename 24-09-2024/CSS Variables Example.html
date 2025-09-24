@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CSS Variables Example</title>
+  <style>
+    /* Define global variables */
+    :root {
+      --primary-color: royalblue;
+      --secondary-color: tomato;
+      --text-color:green;
+      --spacing: 12px;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--primary-color);
+
+      color: var(--text-color);
+      text-align: center;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      color: black;
+      padding: var(--spacing);
+      margin: var(--spacing);
+      border-radius: 8px;
+    }
+
+    button {
+      padding: var(--spacing);
+      border: none;
+      border-radius: 5px;
+      background: var(--secondary-color);
+      color: white;
+      cursor: pointer;
+    }
+
+    /* Dark theme */
+    body.dark {
+      --primary-color: #121212;
+      --secondary-color: orange;
+      --spacing: 15px;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>CSS Variables Demo</h1>
+  <div class="card">Reusable styles using CSS variables</div>
+  <button onclick="document.body.classList.toggle('dark')">
+    Toggle Theme
+  </button>
+</body>
+</html>
