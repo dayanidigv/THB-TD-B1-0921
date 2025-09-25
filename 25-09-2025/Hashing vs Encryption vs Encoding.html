@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hashing vs Encryption vs Encoding</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    input, button { padding: 6px; margin-top: 10px; }
+    .section { margin-bottom: 30px; }
+    .output { margin-top: 5px; font-family: monospace; color: darkblue; }
+    h4 { color: #333; }
+  </style>
+</head>
+<body>
+
+  <h1>Hashing vs Encryption vs Encoding</h1>
+  <input id="inputText" placeholder="Enter text..." />
+  <button onclick="processText()">Transform</button>
+
+  <div class="section">
+    <h4>Encoding (Base64)</h4>
+    <div class="output" id="encoded-base64"></div>
+
+    <h4>Encoding (URL Encoding)</h4>
+    <div class="output" id="encoded-url"></div>
+
+    <h4>Encoding (Hex)</h4>
+    <div class="output" id="encoded-hex"></div>
+
+  </div>
+
+  <div class="section">
+    <h4>Encryption (Simple Caesar Cipher)</h4>
+    <div class="output" id="encrypted"></div>
+  </div>
+
+  <div class="section">
+    <h4>Hashing (SHA-256)</h4>
+    <div class="output" id="hashed"></div>
+  </div>
+
+  <script>
+    async function processText() {
+      const text = document.getElementById("inputText").value;
+
+      // Encoding: Base64
+      const encodedBase64 = btoa(text);
+      // atob() Normal 
+      document.getElementById("encoded-base64").textContent = encodedBase64;
+
+      // Encoding: URL
+      const encodedURL = encodeURIComponent(text);
+      document.getElementById("encoded-url").textContent = encodedURL;
+
+      // Encoding: Hex
+      const encodedHex = [...text].map(c => c.charCodeAt(0).toString(16).padStart(2, '0')).join(' ');
+      document.getElementById("encoded-hex").textContent = encodedHex;
+
+
+      // Encryption: Caesar Cipher (Shift = 5)
+      const shift = 7;
+      const encrypted = text.split('').map(char => {
+        const code = char.charCodeAt(0);
+        return String.fromCharCode(code + shift);
+      }).join('');
+      document.getElementById("encrypted").textContent = encrypted;
+
+      // Hashing: SHA-256
+      const encoder = new TextEncoder();
+      const data = encoder.encode(text);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      document.getElementById("hashed").textContent = hashHex;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+      background-color: white;
+      width: 250px;
+      position: relative;
+    }
+
+    /* Tooltips */
+    .tooltip-active::before {
+      content: "Active Project";
+      display: block;
+      font-size: 0.9em;
+      color: black;
+      font-weight: 500;
+      padding: 3px 6px;
+      border-radius: 4px;
+      margin-bottom: 5px;
+    }
+
+    .tooltip-pending::before {
+      content: "Pending Project";
+      display: block;
+      font-size: 0.9em;
+      color: black;
+      font-weight: 500;
+      padding: 3px 6px;
+      border-radius: 4px;
+      margin-bottom: 5px;
+    }
+
+    .tooltip-inactive::before {
+      content: "Inactive Project";
+      display: block;
+      font-size: 0.9em;
+      color: black;
+      font-weight: 500;
+      padding: 3px 6px;
+      border-radius: 4px;
+      margin-bottom: 5px;
+    }
+
+    /* Status badge */
+    .status-active::after {
+      content: "Active";
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: green;
+      color: white;
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 0.8em;
+    }
+ 
+    .status-pending::after {
+      content: "Pending";
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: orange;
+      color: white;
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 0.8em;
+    }
+
+    .status-inactive::after {
+      content: "Inactive";
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: gray;
+      color: white;
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 0.8em;
+    }
+
+    /* Progress bars */
+    .progress {
+      position: relative;
+      background: #eee;
+      height: 15px;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 15px;
+    }
+
+    .progress-70::after {
+      content: "";
+      display: block;
+      height: 100%;
+      width: 70%;
+      background: #4caf50;
+    }
+
+    .progress-40::after {
+      content: "";
+      display: block;
+      height: 100%;
+      width: 40%;
+      background: #4caf50;
+    }
+
+    .progress-90::after {
+      content: "";
+      display: block;
+      height: 100%;
+      width: 90%;
+      background: #4caf50;
+    }
+
+  </style>
+</head>
+<body>
+
+  <h1>Demo</h1>
+
+  <div class="card tooltip-active status-active">
+    <h2>Project A</h2>
+    <div class="progress progress-70"></div>
+  </div>
+
+  <div class="card tooltip-pending status-pending">
+    <h2>Project B</h2>
+    <div class="progress progress-40"></div>
+  </div>
+
+  <div class="card tooltip-inactive status-inactive">
+    <h2>Project C</h2>
+    <div class="progress progress-90"></div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>data-* Attribute Example</title>
+  <style>
+
+    /* 1. Select elements with a specific data attribute */
+    [data-role] {
+      border: 2px solid darkblue;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    /* 2. Select elements with exact data attribute value */
+    [data-role="admin"] {
+      background-color: lightcoral;
+      color: white;
+      font-weight: bold;
+    }
+
+    [data-role="user"] {
+      background-color: lightgreen;
+      color: black;
+    }
+
+    [data-role]:not(
+      [data-role="user"]
+      ) {
+        display: none;
+    }
+
+
+
+    /* 3. Attribute starts with a value */
+    [data-id^="item"] {
+      font-style: italic;
+    }
+
+    /* 4. Attribute ends with a value */
+    [data-id$="3"] {
+      text-decoration: underline;
+    }
+
+    /* 5. Attribute contains substring */
+    [data-category*="tech"] {
+      color: darkorange;
+    }
+
+    /* 6. Using hover with data attribute */
+    [data-role]:hover {
+      transform: scale(1.02);
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    /* Extra styling */
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>HTML data-* Attribute Esxamples</h1>
+
+  <!-- Using data-role -->
+  <div data-role="admin">Admin Panel</div>
+  <div data-role="user">Regular User Panel</div>
+  <div data-role="guest">Guest Panel</div>
+
+  <!-- Using data-id -->
+  <div data-id="item-1">Item 1</div>
+  <div data-id="item-2">Item 2</div>
+  <div data-id="item-3">Item 3</div>
+
+  <!-- Using data-category -->
+  <div data-category="tech-news">Tech News</div>
+  <div data-category="tech-tips">Tech Tips</div>
+  <div data-category="sports">Sports</div>
+
+  <hr>
+
+  <h2>Accessing data-* attributes in JavaScript</h2>
+
+  <button id="btn">Click to see data attribute</button>
+
+  <div id="message" data-info="Hello World!">
+
+
+  </div>
+
+
+  <script>
+    const btn = document.getElementById('btn');
+
+    const messageDiv = document.getElementById('message');
+
+    btn.addEventListener('click', () => {
+      alert(messageDiv.dataset.info);
+    });
+  </script>
+
+</body>
+</html>

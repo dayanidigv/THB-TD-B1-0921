@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS data-* with attr()</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .example {
+      margin-bottom: 20px;
+    }
+
+    /* 1. Show data-title as a tooltip using ::before */
+    .tooltip::before {
+      content: attr(data-title);
+      display: block;
+      font-size: 0.9em;
+      color: white;
+      background-color: black;
+      padding: 3px 6px;
+      border-radius: 4px;
+      margin-bottom: 5px;
+    }
+
+    /* 2. Show data-role after element using ::after */
+    .role::after {
+      content: "(" attr(data-role) ")";
+      font-weight: bold;
+      color: darkblue;
+    }
+
+
+
+    /* 3. Show data-id before element using ::before */
+    .item::before {
+      content: "[" attr(data-id) "] ";
+      font-weight: bold;
+      color: rgb(247, 0, 255);
+    }
+
+    /* 4. Show multiple data-* values in content */
+    .product::after {
+      content: " - Price: $" attr(data-price) " | Stock: " attr(data-stock);
+      font-style: italic;
+      color: green;
+      margin-left: 5px;
+    }
+
+    /* Styling */
+    .box {
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: fit-content;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>CSS data-* Attributes using attr()</h1>
+
+  <div class="box tooltip" data-title="Hello World">Hover Text Example</div>
+
+  <div class="box tooltip" data-title="Hello....">Hover Text Example</div>
+
+  <div class="box tooltip" data-title="i'm Dayanidi">Hover Text Example</div>
+
+
+
+  <div class="box role" data-role="Admin">User Panel</div>
+  <div class="box role" data-role="User">User Panel</div>
+  <div class="box role" data-role="M">User Panel</div>
+  <div class="box role" data-role="CEO">User Panel</div>
+  <div class="box role" data-role="CTO">User Panel</div>
+
+  <div class="box item" data-id="001">First Item</div>
+  <div class="box item" data-id="002">Second Item</div>
+
+  <div class="box product" data-price="29.99" data-stock="Available">Product 1</div>
+  <div class="box product" data-price="49.99" data-stock="Out of stock">Product 2</div>
+
+</body>
+</html>

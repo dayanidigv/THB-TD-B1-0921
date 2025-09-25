@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video with Styled Subtitles</title>
+  <style>
+    /* Style captions */
+    video::cue {
+      color: yellow;
+      background-color: rgba(0, 0, 0, 0.7);
+      font-size: 1.2em;
+      text-shadow: 1px 1px 3px black;
+    }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #222;
+    }
+  </style>
+</head>
+<body>
+  <div class="example">
+    <video controls width="480">
+
+      <source src="mov_bbb.mp4" type="video/mp4">
+
+      <track src="sample.vtt" kind="subtitles" srclang="en" label="English" default>
+      
+      Your browser does not support the video tag.
+    </video>
+    <p style="color:white;text-align:center;">Subtitles styled using <code>::cue</code></p>
+  </div>
+</body>
+</html>
