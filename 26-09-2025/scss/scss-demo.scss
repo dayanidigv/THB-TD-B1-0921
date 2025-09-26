@@ -1,0 +1,25 @@
+$primary: steelblue;
+
+body {
+  background: #f3f3f3;
+  font-family: sans-serif;
+  text-align: center;
+  padding: 50px;
+
+  h1 {
+    color: $primary;
+  }
+
+  button {
+    background: $primary;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background: darken($primary, 10%);
+    }
+  }
+}

@@ -1,0 +1,23 @@
+body {
+    background: #f3f3f3;
+    font-family: sans-serif;
+    text-align: center;
+    padding: 50px;
+}
+
+body h1 {
+    color: steelblue;
+}
+
+body button {
+    background: steelblue;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+body button:hover {
+    background: #38678f;
+} 

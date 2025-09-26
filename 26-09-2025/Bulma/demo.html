@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bulma Demo</title>
+  <!-- Bulma CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+<body class="has-background-light">
+
+  <section class="section">
+    <div class="container">
+      <h1 class="title has-text-centered">Bulma Demo</h1>
+
+      <!-- Grid / Columns -->
+      <div class="columns">
+        <div class="column has-background-primary has-text-white has-text-centered p-5">Column 1</div>
+        <div class="column has-background-link has-text-white has-text-centered p-5">Column 2</div>
+        <div class="column has-background-warning has-text-centered p-5">Column 3</div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="buttons is-centered my-5">
+        <button class="button is-primary">Primary</button>
+        <button class="button is-link is-light">Outline</button>
+        <button class="button is-danger is-large">Danger Large</button>
+      </div>
+
+      <!-- Form -->
+      <div class="box">
+        <form>
+          <div class="field">
+            <label class="label">Email</label>
+            <div class="control">
+              <input class="input" type="email" placeholder="name@example.com">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Message</label>
+            <div class="control">
+              <textarea class="textarea" placeholder="Your message"></textarea>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="control">
+              <button class="button is-success is-fullwidth">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Notification -->
+      <div class="notification is-info">
+        This is an info notification!
+      </div>
+
+      <!-- Modal Trigger -->
+      <div class="has-text-centered my-5">
+        <button class="button is-dark" id="openModal">Open Modal</button>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal" id="demoModal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Bulma Modal</p>
+            <button class="delete" aria-label="close" id="closeModal"></button>
+          </header>
+          <section class="modal-card-body">
+            Hello! This is a Bulma modal example.
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button is-success" id="closeFooter">Close</button>
+          </footer>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Bulma Modal JS (Minimal) -->
+  <script>
+    const modal = document.getElementById('demoModal');
+    const openBtn = document.getElementById('openModal');
+    const closeBtn = document.getElementById('closeModal');
+    const closeFooter = document.getElementById('closeFooter');
+
+    openBtn.addEventListener('click', () => modal.classList.add('is-active'));
+    closeBtn.addEventListener('click', () => modal.classList.remove('is-active'));
+    closeFooter.addEventListener('click', () => modal.classList.remove('is-active'));
+  </script>
+</body>
+</html>

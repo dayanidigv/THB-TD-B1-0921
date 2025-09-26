@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Typing Animation</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #121212;
+      font-family: 'Courier New', monospace;
+    }
+
+    .typing {
+      color: #00ff00;
+      font-size: 2em;
+      border-right: 3px solid #00ff00;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 12ch;
+      /* number of characters */
+      animation: typing 2s steps(12), blink 3s step-end infinite alternate;
+    }
+
+    @keyframes typing {
+      from {
+        width: 12ch;
+      }
+
+      to {
+        width: 0ch;
+      }
+    }
+
+    @keyframes blink {
+      0% {
+        border-color: burlywood;
+      }
+
+      25% {
+        border-color: red;
+      }
+
+      50% {
+        border-color: blue;
+      }
+
+      75% {
+        border-color: yellow;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="typing">Hello World!</div>
+</body>
+
+</html>
