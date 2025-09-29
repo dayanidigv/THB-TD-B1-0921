@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Fundamentals - Overview</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+    .main-container {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      margin: 40px auto;
+    }
+    .hero-title {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: bold;
+    }
+    .topic-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      height: 100%;
+    }
+    .topic-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+    .topic-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #007acc, #28a745, #dc3545, #fd7e14, #6f42c1, #20c997);
+    }
+    .custom-list li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 8px;
+    }
+    .custom-list li:before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: #0d6efd;
+      font-weight: bold;
+    }
+    .learning-path {
+      background: linear-gradient(135deg, #28a745, #20c997);
+    }
+    .step-arrow::after {
+      content: '→';
+      position: absolute;
+      right: -15px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.2rem;
+      color: white;
+    }
+    @media (max-width: 768px) {
+      .step-arrow::after {
+        content: '↓';
+        right: 50%;
+        top: 100%;
+        transform: translate(50%, 10px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="container main-container p-5">
+      <!-- Hero Section -->
+      <div class="text-center mb-5">
+        <h1 class="display-3 hero-title mb-4">
+          <i class="bi bi-rocket-takeoff"></i> JavaScript Fundamentals
+        </h1>
+      </div>
+      
+      <!-- Intro Section -->
+      <div class="alert alert-primary border-start border-4 border-primary mb-5">
+        <h4 class="alert-heading">
+          <i class="bi bi-code-slash"></i> Welcome to JavaScript Learning Journey
+        </h4>
+        <p class="mb-2"><strong>JavaScript</strong> is the programming language of the web. It's what makes websites interactive, handles user events, manages data, and creates dynamic content.</p>
+        <p class="mb-0"><strong>What you'll learn:</strong> Variables, functions, objects, DOM manipulation, asynchronous programming, and ES6+ modern JavaScript features with hands-on interactive examples.</p>
+      </div>
+
+      <!-- Learning Path -->
+      <div class="card learning-path text-white mb-5">
+        <div class="card-body text-center">
+          <h2 class="card-title mb-4">
+            <i class="bi bi-map"></i> Recommended Learning Path
+          </h2>
+          <div class="row g-3">
+            <div class="col-lg-2 col-md-4 col-6">
+              <div class="bg-light bg-opacity-25 rounded p-3 position-relative step-arrow">
+                <div class="fw-bold fs-4">01</div>
+                <small>Variables & Types</small>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+              <div class="bg-light bg-opacity-25 rounded p-3 position-relative step-arrow">
+                <div class="fw-bold fs-4">02</div>
+                <small>Functions</small>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+              <div class="bg-light bg-opacity-25 rounded p-3 position-relative step-arrow">
+                <div class="fw-bold fs-4">03</div>
+                <small>Arrays & Objects</small>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+              <div class="bg-light bg-opacity-25 rounded p-3 position-relative step-arrow">
+                <div class="fw-bold fs-4">04</div>
+                <small>DOM Manipulation</small>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+              <div class="bg-light bg-opacity-25 rounded p-3 position-relative step-arrow">
+                <div class="fw-bold fs-4">05</div>
+                <small>Async Programming</small>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+              <div class="bg-light bg-opacity-25 rounded p-3">
+                <div class="fw-bold fs-4">06</div>
+                <small>Modern JS (ES6+)</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topics Grid -->
+      <div class="row g-4 mb-5">
+        <div class="col-lg-6 col-md-6">
+          <div class="card h-100 topic-card position-relative">
+            <div class="card-body">
+              <h5 class="card-title d-flex align-items-center mb-3">
+                Variables & Data Types
+              </h5>
+              <ul class="list-unstyled custom-list">
+                <li><code>var</code>, <code>let</code>, <code>const</code> declarations</li>
+                <li>Primitive types (string, number, boolean, null, undefined)</li>
+                <li>Reference types (objects, arrays, functions)</li>
+                <li>Type checking with <code>typeof</code></li>
+                <li>Type conversion</li>
+              </ul>
+              <a href="01-Variables and Data Types.html" class="btn btn-primary rounded-pill mt-3">
+                <i class="bi bi-play-circle"></i> Open Interactive Examples
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6">
+          <div class="card h-100 topic-card position-relative">
+            <div class="card-body">
+              <h5 class="card-title d-flex align-items-center mb-3">
+                Functions
+              </h5>
+              <ul class="list-unstyled custom-list">
+                <li>Function Declarations</li>
+                <li>Function Expressions</li>
+                <li>Arrow Functions</li>
+                <li>Parameters and Arguments</li>
+                <li>Scope and Closures</li>
+              </ul>
+              <a href="02-Functions.html" class="btn btn-success rounded-pill mt-3">
+                <i class="bi bi-play-circle"></i> Open Interactive Examples
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6">
+          <div class="card h-100 topic-card position-relative">
+            <div class="card-body">
+              <h5 class="card-title d-flex align-items-center mb-3">
+                Arrays & Objects
+              </h5>
+              <ul class="list-unstyled custom-list">
+                <li>Array methods: <code>map</code>, <code>filter</code>, <code>reduce</code>, <code>forEach</code></li>
+                <li>Object creation and property access</li>
+                <li>Object methods and <code>this</code> keyword</li>
+                <li>Destructuring assignment patterns</li>
+                <li>Spread and rest operators</li>
+                <li>JSON manipulation</li>
+              </ul>
+              <a href="03-Arrays and Objects.html" class="btn btn-danger rounded-pill mt-3">
+                <i class="bi bi-play-circle"></i> Open Interactive Examples
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6">
+          <div class="card h-100 topic-card position-relative">
+            <div class="card-body">
+              <h5 class="card-title d-flex align-items-center mb-3">
+                DOM Manipulation
+              </h5>
+              <ul class="list-unstyled custom-list">
+                <li>Element selection methods</li>
+                <li>Creating, modifying, removing elements</li>
+                <li>Event handling and listeners</li>
+                <li>Style and CSS class manipulation</li>
+                <li>Form validation and user input</li>
+                <li>Dynamic content creation</li>
+              </ul>
+              <a href="04-DOM Manipulation.html" class="btn btn-warning rounded-pill mt-3">
+                <i class="bi bi-play-circle"></i> Open Interactive Examples
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6">
+          <div class="card h-100 topic-card position-relative">
+            <div class="card-body">
+              <h5 class="card-title d-flex align-items-center mb-3">
+                Asynchronous Programming
+              </h5>
+              <ul class="list-unstyled custom-list">
+                <li>Callbacks and callback hell</li>
+                <li>Promises and promise chaining</li>
+                <li><code>async</code>/<code>await</code> syntax</li>
+                <li>Fetch API for HTTP requests</li>
+                <li>Error handling in async code</li>
+                <li>Parallel vs sequential execution</li>
+              </ul>
+              <a href="05-Asynchronous Programming.html" class="btn btn-secondary rounded-pill mt-3">
+                <i class="bi bi-play-circle"></i> Open Interactive Examples
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6">
+          <div class="card h-100 topic-card position-relative">
+            <div class="card-body">
+              <h5 class="card-title d-flex align-items-center mb-3">
+                ES6+ Modern Features
+              </h5>
+              <ul class="list-unstyled custom-list">
+                <li>Template literals and string interpolation</li>
+                <li>Enhanced object literals</li>
+                <li>Classes and inheritance</li>
+                <li>Modules (import/export)</li>
+                <li>Map, Set, Symbol collections</li>
+                <li>Optional chaining and nullish coalescing</li>
+              </ul>
+              <a href="06-ES6+ Modern Features.html" class="btn btn-info rounded-pill mt-3">
+                <i class="bi bi-play-circle"></i> Open Interactive Examples
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Happy Coding Section -->
+      <div class="text-center py-4">
+        <div class="card bg-gradient " style="background: linear-gradient(135deg, #ff6b6b, #feca57);">
+          <div class="card-body">
+            <h3 class="text-dark mb-3">
+              <i class="bi bi-heart-fill text-danger"></i> Happy Coding! <i class="bi bi-code-slash text-dark"></i>
+            </h3>
+            <p class="text-dark mb-0 fs-5">
+              Remember: Every expert was once a beginner. Keep practicing and enjoy the journey!
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

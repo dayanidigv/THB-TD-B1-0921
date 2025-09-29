@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript ES6+ Modern Features</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .example {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      border-left: 4px solid #20c997;
+    }
+    .output {
+      background: #f8f9fa;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #dee2e6;
+      min-height: 50px;
+      font-family: 'Courier New', monospace;
+    }
+    button {
+      background: #20c997;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 5px;
+      font-size: 14px;
+    }
+    button:hover {
+      background: #1ba085;
+    }
+    .code-demo {
+      background: #e9f7ef;
+      padding: 15px;
+      border-radius: 6px;
+      margin: 10px 0;
+      white-space: pre-wrap;
+      font-family: 'Courier New', monospace;
+    }
+    .result {
+      background: #d4edda;
+      border: 1px solid #c3e6cb;
+      padding: 10px;
+      border-radius: 4px;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+
+<body>
+  
+  <div class="container">
+    <h1>JavaScript ES6+ Modern Features</h1>
+
+    <div class="example">
+      <h3>1. Template Literals</h3>
+      <div class="output" id="template-output"></div>
+      <button onclick="testTemplateLiterals()">Test Template Literals</button>
+    </div>
+
+    <div class="example">
+      <h3>2. Destructuring Assignment</h3>
+      <div class="output" id="destructuring-output"></div>
+      <button onclick="testDestructuring()">Test Destructuring</button>
+    </div>
+
+    <div class="example">
+      <h3>3. Spread and Rest Operators</h3>
+      <div class="output" id="spread-output"></div>
+      <button onclick="testSpreadRest()">Test Spread/Rest</button>
+    </div>
+
+    <div class="example">
+      <h3>4. Enhanced Object Literals</h3>
+      <div class="output" id="object-output"></div>
+      <button onclick="testEnhancedObjects()">Test Enhanced Objects</button>
+    </div>
+
+    <div class="example">
+      <h3>5. Classes</h3>
+      <div class="output" id="classes-output"></div>
+      <button onclick="testClasses()">Test Classes</button>
+    </div>
+
+    <div class="example">
+      <h3>6. Modules (Import/Export)</h3>
+      <div class="output" id="modules-output"></div>
+      <button onclick="testModules()">Test Modules (Simulation)</button>
+    </div>
+
+    <div class="example">
+      <h3>7. Map, Set, and Symbol</h3>
+      <div class="output" id="collections-output"></div>
+      <button onclick="testCollections()">Test Collections</button>
+    </div>
+
+    <div class="example">
+      <h3>8. Optional Chaining and Nullish Coalescing</h3>
+      <div class="output" id="optional-output"></div>
+      <button onclick="testOptionalChaining()">Test Optional Features</button>
+    </div>
+  </div>
+
+
+  <script>
+    // 1. Template Literals
+    function testTemplateLiterals() {
+      const name = "Alice";
+      const age = 25;
+      const items = ["apple", "banana", "cherry"];
+      
+      // Basic template literal
+      const basic = `Hello, ${name}! You are ${age} years old.`;
+      
+      // Multi-line template literal
+      const multiLine = `
+        Name: ${name}
+        Age: ${age}
+        Items: ${items.join(', ')}
+      `;
+      
+      // Expression in template literal
+      const expression = `Next year you'll be ${age + 1}`;
+      
+      // Function call in template literal
+      const functionCall = `Items count: ${items.length}`;
+      
+      // Tagged template literal
+      function highlight(strings, ...values) {
+        return strings.reduce((result, string, i) => {
+          return result + string + (values[i] ? `<strong>${values[i]}</strong>` : '');
+        }, '');
+      }
+      
+      const tagged = highlight`Name: ${name}, Age: ${age}`;
+      
+      document.getElementById('template-output').innerHTML = `
+Basic: ${basic}
+${multiLine}
+Expression: ${expression}
+Function call: ${functionCall}
+Tagged: ${tagged}
+      `;
+    }
+
+    // 2. Destructuring Assignment
+    function testDestructuring() {
+      // Array destructuring
+      const colors = ['red', 'green', 'blue', 'yellow'];
+      const [first, second, ...rest] = colors;
+      const [, , third] = colors; // Skip first two
+      
+      // Object destructuring
+      const person = {
+        name: 'John',
+        age: 30,
+        address: {
+          city: 'New York',
+          country: 'USA'
+        },
+        hobbies: ['reading', 'swimming']
+      };
+      
+      const {name, age} = person;
+      const {address: {city}} = person; // Nested destructuring
+      const {email = 'N/A'} = person; // Default value
+      const {name: fullName} = person; // Rename
+      
+      // Parameter destructuring
+      function greetUser({name, age}) {
+        return `Hello ${name}, you are ${age} years old`;
+      }
+      
+      const greeting = greetUser(person);
+      
+      // Swapping variables
+      let a = 1, b = 2;
+      [a, b] = [b, a];
+      
+      document.getElementById('destructuring-output').innerHTML = `
+Array destructuring:
+  first: ${first}
+  second: ${second}  
+  rest: [${rest.join(', ')}]
+  third (skipped): ${third}
+
+Object destructuring:
+  name: ${name}
+  age: ${age}
+  nested city: ${city}
+  default email: ${email}
+  renamed fullName: ${fullName}
+  
+Function parameter: ${greeting}
+
+Variable swapping: a=${a}, b=${b}
+      `;
+    }
+
+    // 3. Spread and Rest Operators
+    function testSpreadRest() {
+      // Spread with arrays
+      const arr1 = [1, 2, 3];
+      const arr2 = [4, 5, 6];
+      const combined = [...arr1, ...arr2];
+      const withExtra = [0, ...arr1, 3.5, ...arr2, 7];
+      
+      // Spread with objects
+      const obj1 = {a: 1, b: 2};
+      const obj2 = {c: 3, d: 4};
+      const merged = {...obj1, ...obj2};
+      const overridden = {...obj1, b: 99, ...obj2};
+      
+      // Rest parameters
+      function sum(...numbers) {
+        return numbers.reduce((total, num) => total + num, 0);
+      }
+      
+      const sumResult = sum(1, 2, 3, 4, 5);
+      
+      // Rest in destructuring
+      const [head, ...tail] = [1, 2, 3, 4, 5];
+      const {a, ...others} = {a: 1, b: 2, c: 3, d: 4};
+      
+      // Function arguments spreading
+      const numbers = [1, 2, 3, 4, 5];
+      const max = Math.max(...numbers);
+      
+      // String spreading
+      const chars = [...'hello'];
+      
+      document.getElementById('spread-output').innerHTML = `
+Array spreading:
+  combined: [${combined.join(', ')}]
+  with extra: [${withExtra.join(', ')}]
+  
+Object spreading:
+  merged: ${JSON.stringify(merged)}
+  overridden: ${JSON.stringify(overridden)}
+  
+Rest parameters:
+  sum(1,2,3,4,5): ${sumResult}
+  
+Rest destructuring:
+  head: ${head}, tail: [${tail.join(', ')}]
+  a: ${a}, others: ${JSON.stringify(others)}
+  
+Function spreading:
+  Math.max(...[1,2,3,4,5]): ${max}
+  
+String spreading:
+  [...'hello']: [${chars.join(', ')}]
+      `;
+    }
+
+    // 4. Enhanced Object Literals
+    function testEnhancedObjects() {
+      const name = 'Alice';
+      const age = 25;
+      
+      // Property shorthand
+      const person = {name, age}; // Instead of {name: name, age: age}
+      
+      // Method shorthand
+      const calculator = {
+        value: 0,
+        add(n) { return this.value += n; }, // Instead of add: function(n)
+        subtract(n) { return this.value -= n; },
+        reset() { this.value = 0; return this; }
+      };
+      
+      calculator.add(10).subtract(3);
+      
+      // Computed property names
+      const propName = 'dynamicProperty';
+      const obj = {
+        [propName]: 'Dynamic Value',
+        [`computed_${Date.now()}`]: 'Timestamp property',
+        [1 + 2]: 'Number property'
+      };
+      
+      // Getters and setters
+      const user = {
+        firstName: 'John',
+        lastName: 'Doe',
+        get fullName() {
+          return `${this.firstName} ${this.lastName}`;
+        },
+        set fullName(value) {
+          [this.firstName, this.lastName] = value.split(' ');
+        }
+      };
+      
+      const originalFullName = user.fullName;
+      user.fullName = 'Jane Smith';
+      const newFullName = user.fullName;
+      
+      document.getElementById('object-output').innerHTML = `
+Property shorthand:
+  ${JSON.stringify(person)}
+
+Method shorthand & chaining:
+  calculator.add(10).subtract(3): ${calculator.value}
+
+Computed properties:
+  ${JSON.stringify(obj, null, 2)}
+
+Getters/Setters:
+  Original: ${originalFullName}
+  After setting 'Jane Smith': ${newFullName}
+  firstName: ${user.firstName}, lastName: ${user.lastName}
+      `;
+    }
+
+    // 5. Classes
+    function testClasses() {
+      // Basic class
+      class Animal {
+        constructor(name, species) {
+          this.name = name;
+          this.species = species;
+        }
+        
+        speak() {
+          return `${this.name} makes a sound`;
+        }
+        
+        // Static method
+        static getKingdom() {
+          return 'Animalia';
+        }
+        
+        // Getter
+        get info() {
+          return `${this.name} is a ${this.species}`;
+        }
+        
+        // Setter
+        set nickname(value) {
+          this._nickname = value;
+        }
+        
+        get nickname() {
+          return this._nickname || this.name;
+        }
+      }
+      
+      // Inheritance
+      class Dog extends Animal {
+        constructor(name, breed) {
+          super(name, 'dog'); // Call parent constructor
+          this.breed = breed;
+        }
+        
+        speak() {
+          return `${this.name} barks!`;
+        }
+        
+        wagTail() {
+          return `${this.name} is wagging their tail`;
+        }
+      }
+      
+      // Private fields (modern browsers)
+      class BankAccount {
+        #balance = 0; // Private field
+        
+        constructor(initialBalance) {
+          this.#balance = initialBalance;
+        }
+        
+        deposit(amount) {
+          this.#balance += amount;
+          return this;
+        }
+        
+        getBalance() {
+          return this.#balance;
+        }
+      }
+      
+      // Create instances
+      const animal = new Animal('Generic', 'unknown');
+      const dog = new Dog('Buddy', 'Golden Retriever');
+      const account = new BankAccount(100);
+      
+      dog.nickname = 'Good Boy';
+      account.deposit(50);
+      
+      document.getElementById('classes-output').innerHTML = `
+Basic class:
+  ${animal.info}
+  ${animal.speak()}
+  Kingdom: ${Animal.getKingdom()}
+
+Inheritance:
+  ${dog.info}
+  ${dog.speak()}
+  ${dog.wagTail()}
+  Nickname: ${dog.nickname}
+  Breed: ${dog.breed}
+
+Private fields:
+  Initial balance: 100
+  After deposit(50): ${account.getBalance()}
+      `;
+    }
+
+    // 6. Modules (Simulation)
+    function testModules() {
+      // Since we can't actually use modules in a single HTML file,
+      // we'll simulate the syntax and concepts
+      
+      const moduleExample = `
+// math.js - Export examples
+export const PI = 3.14159;
+export function add(a, b) { return a + b; }
+export default class Calculator {
+  multiply(a, b) { return a * b; }
+}
+
+// main.js - Import examples
+import Calculator, { PI, add } from './math.js';
+import * as MathUtils from './math.js';
+
+// Usage
+const calc = new Calculator();
+console.log(PI); // 3.14159
+console.log(add(2, 3)); // 5
+console.log(calc.multiply(4, 5)); // 20
+      `;
+      
+      // Simulated module functionality
+      const MathModule = {
+        PI: 3.14159,
+        add: (a, b) => a + b,
+        Calculator: class {
+          multiply(a, b) { return a * b; }
+        }
+      };
+      
+      const calc = new MathModule.Calculator();
+      const result1 = MathModule.add(2, 3);
+      const result2 = calc.multiply(4, 5);
+      
+      document.getElementById('modules-output').innerHTML = `
+Module syntax (would be in separate files):
+<pre style="background: #f8f9fa; padding: 10px; border-radius: 4px;">${moduleExample}</pre>
+
+Simulated results:
+  PI: ${MathModule.PI}
+  add(2, 3): ${result1}
+  multiply(4, 5): ${result2}
+      `;
+    }
+
+    // 7. Map, Set, and Symbol
+    function testCollections() {
+      // Map
+      const userMap = new Map();
+      userMap.set('name', 'Alice');
+      userMap.set('age', 25);
+      userMap.set(1, 'number key');
+      userMap.set({id: 1}, 'object key');
+      
+      // Set
+      const uniqueNumbers = new Set([1, 2, 3, 3, 4, 4, 5]);
+      uniqueNumbers.add(6);
+      uniqueNumbers.add(3); // Won't be added (already exists)
+      
+      // Symbol
+      const sym1 = Symbol('description');
+      const sym2 = Symbol('description');
+      const sym3 = Symbol.for('global'); // Global symbol
+      
+      const obj = {
+        [sym1]: 'symbol property',
+        regularProp: 'regular property'
+      };
+      
+      // WeakMap and WeakSet (brief example)
+      const weakMap = new WeakMap();
+      const objKey = {};
+      weakMap.set(objKey, 'weakmap value');
+      
+      document.getElementById('collections-output').innerHTML = `
+Map:
+  size: ${userMap.size}
+  get('name'): ${userMap.get('name')}
+  has('age'): ${userMap.has('age')}
+  keys: [${Array.from(userMap.keys()).map(k => typeof k === 'object' ? 'object' : k).join(', ')}]
+
+Set:
+  values: [${Array.from(uniqueNumbers).join(', ')}]
+  size: ${uniqueNumbers.size}
+  has(3): ${uniqueNumbers.has(3)}
+  has(7): ${uniqueNumbers.has(7)}
+
+Symbol:
+  sym1 === sym2: ${sym1 === sym2} (always false)
+  sym1.description: ${sym1.description}
+  Object.keys(obj): [${Object.keys(obj).join(', ')}] (no symbols)
+  Object.getOwnPropertySymbols(obj): ${Object.getOwnPropertySymbols(obj).length} symbol(s)
+
+WeakMap:
+  Created with object key (garbage collected when key is removed)
+      `;
+    }
+
+    // 8. Optional Chaining and Nullish Coalescing
+    function testOptionalChaining() {
+      const user = {
+        name: 'John',
+        address: {
+          street: '123 Main St',
+          city: 'New York'
+        },
+        getEmail() {
+          return 'john@email.com';
+        }
+      };
+      
+      const user2 = {
+        name: 'Jane'
+        // No address property
+      };
+      
+      // Optional chaining (?.)
+      const street1 = user.address?.street; // '123 Main St'
+      const street2 = user2.address?.street; // undefined
+      const zip1 = user.address?.zip; // undefined
+      const email1 = user.getEmail?.(); // 'john@email.com'
+      const email2 = user2.getEmail?.(); // undefined
+      
+      // Nullish coalescing (??)
+      const defaultName = user.name ?? 'Unknown';
+      const defaultAge = user.age ?? 25;
+      const defaultCity = user2.address?.city ?? 'Not specified';
+      
+      // Comparison with || operator
+      const value1 = 0;
+      const value2 = '';
+      const value3 = null;
+      
+      const withOr1 = value1 || 'default'; // 'default' (0 is falsy)
+      const withOr2 = value2 || 'default'; // 'default' ('' is falsy)
+      const withNullish1 = value1 ?? 'default'; // 0 (0 is not null/undefined)
+      const withNullish2 = value2 ?? 'default'; // '' ('' is not null/undefined)
+      const withNullish3 = value3 ?? 'default'; // 'default' (null is nullish)
+      
+      document.getElementById('optional-output').innerHTML = `
+Optional chaining (?.):
+  user.address?.street: ${street1}
+  user2.address?.street: ${street2}
+  user.address?.zip: ${zip1}
+  user.getEmail?.(): ${email1}
+  user2.getEmail?.(): ${email2}
+
+Nullish coalescing (??):
+  user.name ?? 'Unknown': ${defaultName}
+  user.age ?? 25: ${defaultAge}
+  user2.address?.city ?? 'Not specified': ${defaultCity}
+
+?? vs || operator:
+  0 || 'default': ${withOr1}
+  '' || 'default': ${withOr2}
+  0 ?? 'default': ${withNullish1}
+  '' ?? 'default': ${withNullish2}
+  null ?? 'default': ${withNullish3}
+      `;
+    }
+
+    // Initialize first example
+    testTemplateLiterals();
+  </script>
+</body>
+</html>

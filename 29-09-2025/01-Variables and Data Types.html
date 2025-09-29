@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Variables and Data Types</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    .output {
+      background: white;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border-left: 4px solid #007acc;
+    }
+    code {
+      background: #f0f0f0;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+    }
+    .example {
+      background: #e8f4fd;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <h1>JavaScript Variables and Data Types</h1>
+
+  <div class="example">
+    <h3>1. Variable Declarations</h3>
+    <div class="output" id="variables"></div>
+  </div>
+
+  <div class="example">
+    <h3>2. Data Types</h3>
+    <div class="output" id="dataTypes"></div>
+  </div>
+
+  <div class="example">
+    <h3>3. Type Checking</h3>
+    <div class="output" id="typeChecking"></div>
+  </div>
+
+  <div class="example">
+    <h3>4. Type Conversion</h3>
+    <div class="output" id="typeConversion"></div>
+  </div>
+
+  <script>
+    // 1. Variable Declarations
+    console.log("=== Variables ===");
+    
+    // var - function scoped
+    var name = "John";
+    
+    // let - block scoped
+    let age = 25;
+    
+    // const - block scoped, cannot be reassigned
+    const PI = 3.14159;
+
+    let var_div = document.getElementById('variables');
+
+    console.warn(var_div);
+    
+    document.getElementById('variables').innerHTML = `
+      <code>var name = "John";</code> → ${name}<br>
+      <code>let age = 25;</code> → ${age}<br>
+      <code>const PI = 3.14159;</code> → ${PI}
+    `;
+
+    var_div.style.borderColor = "red";
+
+    var_div.style.backgroundColor = "blue";
+
+    var_div.innerText = "Hello World";
+
+    var_div.append("_!!!");
+
+    var var_div_hr = () => {
+      return document.createElement("hr");
+    };
+
+    var_div.appendChild(var_div_hr());
+
+    var_div.appendChild(var_div_hr());
+
+
+
+
+    // 2. Data Types
+    console.log("=== Data Types ===");
+    
+    // Primitive Types
+    let str = "Hello World";           // String
+    let num = 42;                      // Number
+    let bool = true;                   // Boolean
+    let undef = undefined;             // Undefined
+    let nullVal = null;                // Null
+    let sym = Symbol('id');            // Symbol
+    let bigInt = 123n;                 // BigInt
+    
+    // Reference Types
+    let obj = { name: "Alice", age: 30 };  // Object
+
+    let arr = [1, 2, 3, 4, 5];            // Array
+
+    let func = function() { return "Hello"; }; // Function
+    
+    document.getElementById('dataTypes').innerHTML = `
+      <strong>Primitive Types:</strong><br>
+      String: <code>"${str}"</code><br>
+      Number: <code>${num}</code><br>
+      Boolean: <code>${bool}</code><br>
+      Undefined: <code>${undef}</code><br>
+      Null: <code>${nullVal}</code><br>
+      Symbol: <code>${sym.toString()}</code><br>
+      BigInt: <code>${bigInt}</code><br><br>
+      
+      <strong>Reference Types:</strong><br>
+      Object: <code>${JSON.stringify(obj)}</code><br>
+      Array: <code>[${arr}]</code><br>
+      Function: <code>${func.toString().substring(0, 30)}...</code>
+    `;
+
+    // 3. Type Checking
+    console.log("=== Type Checking ===");
+    
+    document.getElementById('typeChecking').innerHTML = `
+      <code>typeof "${str}"</code> → ${typeof str}<br>
+      <code>typeof ${num}</code> → ${typeof num}<br>
+      <code>typeof ${bool}</code> → ${typeof bool}<br>
+      <code>typeof undefined</code> → ${typeof undef}<br>
+      <code>typeof null</code> → ${typeof nullVal} (Special case!)<br>
+      <code>typeof ${sym.toString()}</code> → ${typeof sym}<br>
+      <code>typeof ${bigInt}</code> → ${typeof bigInt}<br>
+      <code>typeof [1,2,3]</code> → ${typeof arr}<br>
+      <code>Array.isArray([1,2,3])</code> → ${Array.isArray(arr)}
+    `;
+
+    // 4. Type Conversion
+    console.log("=== Type Conversion ===");
+    
+    // Implicit conversion
+    let result1 = "5" + 3;     // String concatenation
+
+    let result2 = "5" - 3;     // Number subtraction
+
+    let result3 = +"42";       // String to number
+
+    let result4 = !!"hello";   // String to boolean
+    
+    // Explicit conversion
+    let str2num = Number("123");
+
+    let num2str = String(456);
+    
+    let any2bool = Boolean(0);
+    
+    document.getElementById('typeConversion').innerHTML = `
+      <strong>Implicit Conversion:</strong><br>
+      <code>"5" + 3</code> → ${result1} (${typeof result1})<br>
+      <code>"5" - 3</code> → ${result2} (${typeof result2})<br>
+      <code>+"42"</code> → ${result3} (${typeof result3})<br>
+      <code>!!"hello"</code> → ${result4} (${typeof result4})<br><br>
+      
+      <strong>Explicit Conversion:</strong><br>
+      <code>Number("123")</code> → ${str2num} (${typeof str2num})<br>
+      <code>String(456)</code> → "${num2str}" (${typeof num2str})<br>
+      <code>Boolean(0)</code> → ${any2bool} (${typeof any2bool})
+    `;
+
+    // Log everything to console as well
+    console.log("Variables:", {name, age, PI});
+    console.log("Data Types:", {str, num, bool, undef, nullVal, sym, bigInt, obj, arr});
+    console.log("Type Checking:", {
+      strType: typeof str,
+      numType: typeof num,
+      arrType: typeof arr,
+      isArray: Array.isArray(arr)
+    });
+    console.log("Type Conversion:", {result1, result2, result3, result4, str2num, num2str, any2bool});
+  </script>
+</body>
+</html>

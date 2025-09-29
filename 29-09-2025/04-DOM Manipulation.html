@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript DOM Manipulation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .example {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      border-left: 4px solid #6f42c1;
+    }
+    .output {
+      background: #f8f9fa;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #dee2e6;
+    }
+    button {
+      background: #6f42c1;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 5px;
+      font-size: 14px;
+    }
+    button:hover {
+      background: #5a31a1;
+    }
+    .demo-box {
+      width: 100px;
+      height: 100px;
+      background: #007acc;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 10px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    .highlight {
+      background: #ffc107 !important;
+      color: black !important;
+      transform: scale(1.1);
+    }
+    .list-item {
+      padding: 8px;
+      margin: 5px 0;
+      background: #e9ecef;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .list-item:hover {
+      background: #dee2e6;
+    }
+    .selected {
+      background: #28a745 !important;
+      color: white !important;
+    }
+    .form-group {
+      margin: 15px 0;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .error {
+      color: #dc3545;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+    .success {
+      color: #28a745;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>JavaScript DOM Manipulation</h1>
+
+    <div class="example">
+      <h3>1. Element Selection</h3>
+      <div class="output">
+        <p id="demo-paragraph">This is a demo paragraph.</p>
+        <p class="demo-class">First paragraph with class</p>
+        <p class="demo-class">Second paragraph with class</p>
+        <div data-info="test">Element with data attribute</div>
+      </div>
+      <button onclick="testElementSelection()">Test Selection Methods</button>
+      <div id="selection-output"></div>
+    </div>
+
+    <div class="example">
+      <h3>2. Element Creation and Modification</h3>
+      <div class="output" id="creation-container">
+        <p>Original content</p>
+      </div>
+      <button onclick="createElement()">Create Element</button>
+      <button onclick="modifyElement()">Modify Element</button>
+      <button onclick="removeElement()">Remove Element</button>
+      <div id="creation-output"></div>
+    </div>
+
+    <div class="example">
+      <h3>3. Style Manipulation</h3>
+      <div class="output">
+        <div class="demo-box" id="style-demo">Click to Style</div>
+      </div>
+      <button onclick="changeStyles()">Change Styles</button>
+      <button onclick="toggleClass()">Toggle Class</button>
+      <button onclick="resetStyles()">Reset Styles</button>
+    </div>
+
+    <div class="example">
+      <h3>4. Event Handling</h3>
+      <div class="output">
+        <button id="click-btn">Click Me!</button>
+        <input type="text" id="text-input" placeholder="Type something...">
+        <div id="mouse-area" style="width: 200px; height: 100px; background: #e9ecef; border-radius: 4px; display: flex; align-items: center; justify-content: center; margin: 10px 0;">Mouse Area</div>
+      </div>
+      <div id="event-output"></div>
+    </div>
+
+    <div class="example">
+      <h3>5. Dynamic List Management</h3>
+      <div class="output">
+        <input type="text" id="list-input" placeholder="Enter item name">
+        <button onclick="addListItem()">Add Item</button>
+        <ul id="dynamic-list"></ul>
+      </div>
+    </div>
+
+    <div class="example">
+      <h3>6. Form Validation</h3>
+      <div class="output">
+        <form id="validation-form">
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <div class="error" id="username-error"></div>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <div class="error" id="email-error"></div>
+          </div>
+          
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <div class="error" id="password-error"></div>
+          </div>
+          
+          <button type="submit">Submit</button>
+        </form>
+        <div id="form-output"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 1. Element Selection
+    function testElementSelection() {
+      // Different selection methods
+      const byId = document.getElementById('demo-paragraph');
+      const byClass = document.getElementsByClassName('demo-class');
+      const byTag = document.getElementsByTagName('p');
+      const querySelector = document.querySelector('.demo-class');
+      const querySelectorAll = document.querySelectorAll('.demo-class');
+      const byAttribute = document.querySelector('[data-info="test"]');
+
+      const output = `
+        <strong>Selection Results:</strong><br>
+        getElementById: ${byId.textContent}<br>
+        getElementsByClassName: ${byClass.length} elements found<br>
+        getElementsByTagName: ${byTag.length} p elements found<br>
+        querySelector: ${querySelector.textContent}<br>
+        querySelectorAll: ${querySelectorAll.length} elements found<br>
+        By attribute: ${byAttribute.textContent}
+      `;
+
+      document.getElementById('selection-output').innerHTML = output;
+      
+      console.log('Element Selection:', {
+        byId, byClass, byTag, querySelector, querySelectorAll, byAttribute
+      });
+    }
+
+    // 2. Element Creation and Modification
+    function createElement() {
+      const container = document.getElementById('creation-container');
+      const newElement = document.createElement('div');
+      newElement.textContent = 'Newly created element';
+      newElement.style.background = '#28a745';
+      newElement.style.color = 'white';
+      newElement.style.padding = '10px';
+      newElement.style.margin = '10px 0';
+      newElement.style.borderRadius = '4px';
+      newElement.id = 'new-element';
+      container.appendChild(newElement);
+      
+      document.getElementById('creation-output').innerHTML = 'Element created and added to DOM';
+    }
+
+    function modifyElement() {
+      const element = document.getElementById('new-element');
+      if (element) {
+        element.textContent = 'Modified element content';
+        element.style.background = '#dc3545';
+        element.setAttribute('data-modified', 'true');
+        document.getElementById('creation-output').innerHTML = 'Element modified';
+      } else {
+        document.getElementById('creation-output').innerHTML = 'Create an element first';
+      }
+    }
+
+    function removeElement() {
+      const element = document.getElementById('new-element');
+      if (element) {
+        element.remove();
+        document.getElementById('creation-output').innerHTML = 'Element removed from DOM';
+      } else {
+        document.getElementById('creation-output').innerHTML = 'No element to remove';
+      }
+    }
+
+    // 3. Style Manipulation
+    function changeStyles() {
+      const box = document.getElementById('style-demo');
+      box.style.background = '#dc3545';
+      box.style.borderRadius = '50%';
+      box.style.transform = 'rotate(45deg)';
+    }
+
+    function toggleClass() {
+      const box = document.getElementById('style-demo');
+      box.classList.toggle('highlight');
+    }
+
+    function resetStyles() {
+      const box = document.getElementById('style-demo');
+      box.style.cssText = '';
+      box.className = 'demo-box';
+    }
+
+    // 4. Event Handling
+    document.getElementById('click-btn').addEventListener('click', function() {
+      document.getElementById('event-output').innerHTML = `Button clicked at ${new Date().toLocaleTimeString()}`;
+    });
+
+    document.getElementById('text-input').addEventListener('input', function(e) {
+      document.getElementById('event-output').innerHTML = `You typed: ${e.target.value}`;
+    });
+
+    document.getElementById('mouse-area').addEventListener('mouseover', function() {
+      this.style.background = '#007acc';
+      this.style.color = 'white';
+    });
+
+    document.getElementById('mouse-area').addEventListener('mouseout', function() {
+      this.style.background = '#e9ecef';
+      this.style.color = 'black';
+    });
+
+    // 5. Dynamic List Management
+    function addListItem() {
+      const input = document.getElementById('list-input');
+      const list = document.getElementById('dynamic-list');
+      const value = input.value.trim();
+      
+      if (value) {
+        const li = document.createElement('li');
+        li.className = 'list-item';
+        li.innerHTML = `
+          ${value} 
+          <button onclick="removeListItem(this)" style="float: right; background: #dc3545; color: white; border: none; padding: 2px 6px; border-radius: 3px; cursor: pointer;">×</button>
+        `;
+        
+        li.addEventListener('click', function(e) {
+          if (e.target.tagName !== 'BUTTON') {
+            this.classList.toggle('selected');
+          }
+        });
+        
+        list.appendChild(li);
+        input.value = '';
+      }
+    }
+
+    function removeListItem(button) {
+      button.parentElement.remove();
+    }
+
+    // Allow Enter key to add items
+    document.getElementById('list-input').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        addListItem();
+      }
+    });
+
+    // 6. Form Validation
+    document.getElementById('validation-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const username = document.getElementById('username').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      let isValid = true;
+      
+      // Clear previous errors
+      document.querySelectorAll('.error').forEach(error => error.textContent = '');
+      
+      // Username validation
+      if (username.length < 3) {
+        document.getElementById('username-error').textContent = 'Username must be at least 3 characters';
+        isValid = false;
+      }
+      
+      // Email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        document.getElementById('email-error').textContent = 'Please enter a valid email address';
+        isValid = false;
+      }
+      
+      // Password validation
+      if (password.length < 6) {
+        document.getElementById('password-error').textContent = 'Password must be at least 6 characters';
+        isValid = false;
+      }
+      
+      if (isValid) {
+        document.getElementById('form-output').innerHTML = `
+          <div class="success">
+            <strong>Form submitted successfully!</strong><br>
+            Username: ${username}<br>
+            Email: ${email}<br>
+            Password: ${'*'.repeat(password.length)}
+          </div>
+        `;
+      }
+    });
+
+    // Real-time validation
+    document.getElementById('username').addEventListener('blur', function() {
+      const value = this.value;
+      const errorDiv = document.getElementById('username-error');
+      if (value.length > 0 && value.length < 3) {
+        errorDiv.textContent = 'Username must be at least 3 characters';
+      } else {
+        errorDiv.textContent = '';
+      }
+    });
+
+    document.getElementById('email').addEventListener('blur', function() {
+      const value = this.value;
+      const errorDiv = document.getElementById('email-error');
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (value.length > 0 && !emailRegex.test(value)) {
+        errorDiv.textContent = 'Please enter a valid email address';
+      } else {
+        errorDiv.textContent = '';
+      }
+    });
+
+    // Initialize first example
+    testElementSelection();
+  </script>
+</body>
+</html>

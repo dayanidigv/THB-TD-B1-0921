@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Arrays and Objects</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    .output {
+      background: white;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border-left: 4px solid #dc3545;
+    }
+    code {
+      background: #f0f0f0;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+    }
+    .example {
+      background: #fde8e8;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 6px;
+    }
+    button {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button:hover {
+      background: #b52d3c;
+    }
+    .json-output {
+      background: #f8f9fa;
+      padding: 10px;
+      border-radius: 4px;
+      font-family: monospace;
+      white-space: pre-wrap;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>JavaScript Arrays and Objects</h1>
+
+  <div class="example">
+    <h3>1. Array Basics</h3>
+    <div class="output" id="arrayBasics"></div>
+    <button onclick="testArrayBasics()">Test Array Basics</button>
+  </div>
+
+  <div class="example">
+    <h3>2. Array Methods</h3>
+    <div class="output" id="arrayMethods"></div>
+    <button onclick="testArrayMethods()">Test Array Methods</button>
+  </div>
+
+  <div class="example">
+    <h3>3. Object Basics</h3>
+    <div class="output" id="objectBasics"></div>
+    <button onclick="testObjectBasics()">Test Object Basics</button>
+  </div>
+
+  <div class="example">
+    <h3>4. Object Methods</h3>
+    <div class="output" id="objectMethods"></div>
+    <button onclick="testObjectMethods()">Test Object Methods</button>
+  </div>
+
+  <div class="example">
+    <h3>5. Destructuring</h3>
+    <div class="output" id="destructuring"></div>
+    <button onclick="testDestructuring()">Test Destructuring</button>
+  </div>
+
+  <script>
+    function testArrayBasics() {
+      // Array creation and basic operations
+      let fruits = ["apple", "banana", "orange"];
+      let numbers = [1, 2, 3, 4, 5];
+      let mixed = [1, "hello", true, null, {name: "test"}];
+
+      // Array properties and methods
+      let length = fruits.length;
+      let firstFruit = fruits[0];
+      let lastFruit = fruits[fruits.length - 1];
+
+      // Adding elements
+      fruits.push("grape");
+      fruits.unshift("mango");
+
+      // Removing elements
+      let removedLast = fruits.pop();
+      let removedFirst = fruits.shift();
+
+      document.getElementById('arrayBasics').innerHTML = `
+        <strong>Array Creation:</strong><br>
+        <code>let fruits = ["apple", "banana", "orange"];</code><br>
+        <code>let numbers = [1, 2, 3, 4, 5];</code><br>
+        <code>let mixed = [1, "hello", true, null, {name: "test"}];</code><br><br>
+        
+        <strong>Array Access:</strong><br>
+        Length: ${length}<br>
+        First element: ${firstFruit}<br>
+        Last element: ${lastFruit}<br><br>
+        
+        <strong>Array Modification:</strong><br>
+        After push/unshift: [${fruits.join(', ')}]<br>
+        Removed last: ${removedLast}<br>
+        Removed first: ${removedFirst}<br>
+        Final array: [${fruits.join(', ')}]
+      `;
+
+      console.log("Array Basics:", {fruits, numbers, mixed, operations: {removedLast, removedFirst}});
+    }
+
+    function testArrayMethods() {
+      let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+      
+      // Filter even numbers
+      let evenNumbers = numbers.filter(num => num % 2 === 0);
+      
+      // Map to squares
+      let squares = numbers.map(num => num * num);
+      
+      // Find first number > 5
+      let found = numbers.find(num => num > 5);
+      
+      // Reduce to sum
+      let sum = numbers.reduce((acc, num) => acc + num, 0);
+      
+      // Some and every
+      let hasEven = numbers.some(num => num % 2 === 0);
+      let allPositive = numbers.every(num => num > 0);
+      
+      // Sort and reverse
+      let sorted = [...numbers].sort((a, b) => b - a); // descending
+      
+      // Join
+      let joined = numbers.join(' - ');
+
+      document.getElementById('arrayMethods').innerHTML = `
+        <strong>Original:</strong> [${numbers.join(', ')}]<br><br>
+        
+        <code>.filter(num => num % 2 === 0)</code><br>
+        Even numbers: [${evenNumbers.join(', ')}]<br><br>
+        
+        <code>.map(num => num * num)</code><br>
+        Squares: [${squares.join(', ')}]<br><br>
+        
+        <code>.find(num => num > 5)</code><br>
+        First > 5: ${found}<br><br>
+        
+        <code>.reduce((acc, num) => acc + num, 0)</code><br>
+        Sum: ${sum}<br><br>
+        
+        <code>.some(num => num % 2 === 0)</code><br>
+        Has even: ${hasEven}<br><br>
+        
+        <code>.every(num => num > 0)</code><br>
+        All positive: ${allPositive}<br><br>
+        
+        <code>.sort((a, b) => b - a)</code><br>
+        Descending: [${sorted.join(', ')}]<br><br>
+        
+        <code>.join(' - ')</code><br>
+        Joined: ${joined}
+      `;
+
+      console.log("Array Methods:", {
+        original: numbers,
+        evenNumbers,
+        squares,
+        found,
+        sum,
+        hasEven,
+        allPositive,
+        sorted,
+        joined
+      });
+    }
+
+    function testObjectBasics() {
+      // Object creation
+      let person = {
+        name: "John Doe",
+        age: 30,
+        city: "New York",
+        isEmployed: true
+      };
+
+      // Object access
+      let name1 = person.name;           // dot notation
+      let age1 = person["age"];          // bracket notation
+      let key = "city";
+      let city1 = person[key];           // dynamic property access
+
+      // Object modification
+      person.email = "john@email.com";   // add property
+      person.age = 31;                   // modify property
+      delete person.isEmployed;          // delete property
+
+      // Object methods
+      let keys = Object.keys(person);
+      let values = Object.values(person);
+      let entries = Object.entries(person);
+
+      document.getElementById('objectBasics').innerHTML = `
+        <strong>Object Creation:</strong><br>
+        <div class="json-output">${JSON.stringify(person, null, 2)}</div>
+        
+        <strong>Property Access:</strong><br>
+        person.name → ${name1}<br>
+        person["age"] → ${age1}<br>
+        person[key] where key="city" → ${city1}<br><br>
+        
+        <strong>Object Information:</strong><br>
+        Keys: [${keys.join(', ')}]<br>
+        Values: [${values.join(', ')}]<br>
+        Entries: ${JSON.stringify(entries)}
+      `;
+
+      console.log("Object Basics:", {person, keys, values, entries});
+    }
+
+    function testObjectMethods() {
+      let user = {
+        firstName: "Alice",
+        lastName: "Johnson",
+        age: 28,
+        address: {
+          street: "123 Main St",
+          city: "Boston",
+          zip: "02101"
+        },
+        hobbies: ["reading", "swimming", "coding"],
+        
+        // Object methods
+        getFullName: function() {
+          return `${this.firstName} ${this.lastName}`;
+        },
+        
+        greet() {
+          return `Hello, I'm ${this.getFullName()}`;
+        },
+        
+        addHobby(hobby) {
+          this.hobbies.push(hobby);
+        }
+      };
+
+      // Call methods
+      let fullName = user.getFullName();
+      let greeting = user.greet();
+      user.addHobby("photography");
+
+      // Object copying
+      let shallowCopy = {...user};
+      let deepCopy = JSON.parse(JSON.stringify(user));
+
+      // Object.assign
+      let defaults = {theme: "light", language: "en"};
+      let settings = Object.assign({}, defaults, {theme: "dark"});
+
+      document.getElementById('objectMethods').innerHTML = `
+        <strong>Object Methods:</strong><br>
+        getFullName() → ${fullName}<br>
+        greet() → ${greeting}<br>
+        After adding hobby: [${user.hobbies.join(', ')}]<br><br>
+        
+        <strong>Object Copying:</strong><br>
+        Shallow copy created with spread operator {...user}<br>
+        Deep copy created with JSON.parse(JSON.stringify(user))<br><br>
+        
+        <strong>Object.assign:</strong><br>
+        <div class="json-output">${JSON.stringify(settings, null, 2)}</div>
+        
+        <strong>Full User Object:</strong><br>
+        <div class="json-output">${JSON.stringify(user, null, 2)}</div>
+      `;
+
+      console.log("Object Methods:", {user, fullName, greeting, shallowCopy, deepCopy, settings});
+    }
+
+    function testDestructuring() {
+      // Array destructuring
+      let colors = ["red", "green", "blue", "yellow"];
+      let [first, second, ...rest] = colors;
+      let [, , third] = colors; // skip first two
+
+      // Object destructuring
+      let person = {
+        name: "Sarah",
+        age: 25,
+        city: "Seattle",
+        country: "USA"
+      };
+
+      let {name, age} = person;
+      let {city: location, country = "Unknown"} = person; // rename and default value
+
+      // Nested destructuring
+      let user = {
+        id: 1,
+        profile: {
+          username: "sarah123",
+          contact: {
+            email: "sarah@email.com",
+            phone: "555-1234"
+          }
+        }
+      };
+
+      let {profile: {username, contact: {email}}} = user;
+
+      // Function parameter destructuring
+      function displayUser({name, age, city}) {
+        return `${name}, ${age} years old, lives in ${city}`;
+      }
+
+      let userInfo = displayUser(person);
+
+      // Swapping variables
+      let a = 1, b = 2;
+      [a, b] = [b, a];
+
+      document.getElementById('destructuring').innerHTML = `
+        <strong>Array Destructuring:</strong><br>
+        <code>let [first, second, ...rest] = ["red", "green", "blue", "yellow"];</code><br>
+        first → ${first}<br>
+        second → ${second}<br>
+        rest → [${rest.join(', ')}]<br>
+        third (skipping first two) → ${third}<br><br>
+        
+        <strong>Object Destructuring:</strong><br>
+        <code>let {name, age} = person;</code><br>
+        name → ${name}<br>
+        age → ${age}<br><br>
+        
+        <code>let {city: location, country = "Unknown"} = person;</code><br>
+        location (renamed from city) → ${location}<br>
+        country → ${country}<br><br>
+        
+        <strong>Nested Destructuring:</strong><br>
+        <code>let {profile: {username, contact: {email}}} = user;</code><br>
+        username → ${username}<br>
+        email → ${email}<br><br>
+        
+        <strong>Function Parameter Destructuring:</strong><br>
+        displayUser(person) → ${userInfo}<br><br>
+        
+        <strong>Variable Swapping:</strong><br>
+        Before: a = 1, b = 2<br>
+        After [a, b] = [b, a]: a = ${a}, b = ${b}
+      `;
+
+      console.log("Destructuring:", {
+        arrays: {first, second, rest, third},
+        objects: {name, age, location, country},
+        nested: {username, email},
+        swapping: {a, b},
+        userInfo
+      });
+    }
+
+    // Initialize first example
+    testArrayBasics();
+  </script>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Functions</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    .output {
+      background: white;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border-left: 4px solid #28a745;
+    }
+    code {
+      background: #f0f0f0;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+    }
+    .example {
+      background: #e8f5e8;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 6px;
+    }
+    button {
+      background: #007acc;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button:hover {
+      background: #005a9e;
+    }
+  </style>
+</head>
+<body>
+  <h1>JavaScript Functions</h1>
+
+  <div class="example">
+    <h3>1. Function Declarations</h3>
+    <div class="output" id="declarations"></div>
+    <button onclick="testDeclarations()">Test Function Declarations</button>
+  </div>
+
+  <div class="example">
+    <h3>2. Function Expressions</h3>
+    <div class="output" id="expressions"></div>
+    <button onclick="testExpressions()">Test Function Expressions</button>
+  </div>
+
+  <div class="example">
+    <h3>3. Arrow Functions</h3>
+    <div class="output" id="arrowFunctions"></div>
+    <button onclick="testArrowFunctions()">Test Arrow Functions</button>
+  </div>
+
+  <div class="example">
+    <h3>4. Parameters and Arguments</h3>
+    <div class="output" id="parameters"></div>
+    <button onclick="testParameters()">Test Parameters</button>
+  </div>
+
+  <div class="example">
+    <h3>5. Scope and Closures</h3>
+    <div class="output" id="closures"></div>
+    <button onclick="testClosures()">Test Closures</button>
+  </div>
+
+  <script>
+    // 1. Function Declarations
+    function greet(name) {
+      return `Hello, ${name}!`;
+    }
+
+    function add(a, b) {
+      return a + b;
+    }
+
+    function testDeclarations() {
+      const result1 = greet("Alice");
+      const result2 = add(5, 3);
+      
+      document.getElementById('declarations').innerHTML = `
+        <code>function greet(name) { return \`Hello, \${name}!\`; }</code><br>
+        greet("Alice") → ${result1}<br><br>
+        
+        <code>function add(a, b) { return a + b; }</code><br>
+        add(5, 3) → ${result2}
+      `;
+      
+      console.log("Function Declarations:", {result1, result2});
+    }
+
+    // 2. Function Expressions
+    const multiply = function(a, b) {
+      return a * b;
+    };
+
+    const divide = function(a, b) {
+      return b !== 0 ? a / b : "Cannot divide by zero";
+    };
+
+    function testExpressions() {
+      const result1 = multiply(4, 6);
+      const result2 = divide(10, 2);
+      const result3 = divide(10, 0);
+      
+      document.getElementById('expressions').innerHTML = `
+        <code>const multiply = function(a, b) { return a * b; };</code><br>
+        multiply(4, 6) → ${result1}<br><br>
+        
+        <code>const divide = function(a, b) { return b !== 0 ? a / b : "Cannot divide by zero"; };</code><br>
+        divide(10, 2) → ${result2}<br>
+        divide(10, 0) → ${result3}
+      `;
+      
+      console.log("Function Expressions:", {result1, result2, result3});
+    }
+
+    // 3. Arrow Functions
+    const square = (x) => x * x;
+    const isEven = num => num % 2 === 0;
+    const getMax = (a, b) => {
+      if (a > b) return a;
+      return b;
+    };
+
+    // Arrow function with no parameters
+    const getCurrentTime = () => new Date().toLocaleTimeString();
+
+    function testArrowFunctions() {
+      const result1 = square(7);
+      const result2 = isEven(8);
+      const result3 = isEven(9);
+      const result4 = getMax(15, 23);
+      const result5 = getCurrentTime();
+      
+      document.getElementById('arrowFunctions').innerHTML = `
+        <code>const square = (x) => x * x;</code><br>
+        square(7) → ${result1}<br><br>
+        
+        <code>const isEven = num => num % 2 === 0;</code><br>
+        isEven(8) → ${result2}<br>
+        isEven(9) → ${result3}<br><br>
+        
+        <code>const getMax = (a, b) => { if (a > b) return a; return b; };</code><br>
+        getMax(15, 23) → ${result4}<br><br>
+        
+        <code>const getCurrentTime = () => new Date().toLocaleTimeString();</code><br>
+        getCurrentTime() → ${result5}
+      `;
+      
+      console.log("Arrow Functions:", {result1, result2, result3, result4, result5});
+    }
+
+    // 4. Parameters and Arguments
+    function introduce(name, age = 25, city = "Unknown") {
+      return `Hi, I'm ${name}, ${age} years old, from ${city}`;
+    }
+
+    function sum(...numbers) {
+      return numbers.reduce((total, num) => total + num, 0);
+    }
+
+    function processUser({name, email, age}) {
+      return `User: ${name} (${email}), Age: ${age}`;
+    }
+
+    function testParameters() {
+      const result1 = introduce("Bob");
+      const result2 = introduce("Alice", 30);
+      const result3 = introduce("Charlie", 35, "New York");
+      const result4 = sum(1, 2, 3, 4, 5);
+      const result5 = processUser({name: "Dave", email: "dave@email.com", age: 28});
+      
+      document.getElementById('parameters').innerHTML = `
+        <strong>Default Parameters:</strong><br>
+        <code>function introduce(name, age = 25, city = "Unknown")</code><br>
+        introduce("Bob") → ${result1}<br>
+        introduce("Alice", 30) → ${result2}<br>
+        introduce("Charlie", 35, "New York") → ${result3}<br><br>
+        
+        <strong>Rest Parameters:</strong><br>
+        <code>function sum(...numbers)</code><br>
+        sum(1, 2, 3, 4, 5) → ${result4}<br><br>
+        
+        <strong>Destructuring Parameters:</strong><br>
+        <code>function processUser({name, email, age})</code><br>
+        processUser({name: "Dave", email: "dave@email.com", age: 28}) → ${result5}
+      `;
+      
+      console.log("Parameters:", {result1, result2, result3, result4, result5});
+    }
+
+    // 5. Scope and Closures
+    function createCounter() {
+      let count = 0;
+      
+      return {
+        increment: () => ++count,
+        decrement: () => --count,
+        getValue: () => count
+      };
+    }
+
+    function createMultiplier(factor) {
+      return function(number) {
+        return number * factor;
+      };
+    }
+
+    function testClosures() {
+      const counter = createCounter();
+      const double = createMultiplier(2);
+      const triple = createMultiplier(3);
+      
+      const result1 = counter.getValue();
+      counter.increment();
+      counter.increment();
+      const result2 = counter.getValue();
+      counter.decrement();
+      const result3 = counter.getValue();
+      
+      const result4 = double(5);
+      const result5 = triple(4);
+      
+      document.getElementById('closures').innerHTML = `
+        <strong>Counter Closure:</strong><br>
+        <code>const counter = createCounter();</code><br>
+        Initial value → ${result1}<br>
+        After 2 increments → ${result2}<br>
+        After 1 decrement → ${result3}<br><br>
+        
+        <strong>Multiplier Closure:</strong><br>
+        <code>const double = createMultiplier(2);</code><br>
+        <code>const triple = createMultiplier(3);</code><br>
+        double(5) → ${result4}<br>
+        triple(4) → ${result5}
+      `;
+      
+      console.log("Closures:", {
+        counter: {initial: result1, afterIncrements: result2, afterDecrement: result3},
+        multipliers: {double: result4, triple: result5}
+      });
+    }
+
+    // Initialize first example
+    testDeclarations();
+  </script>
+</body>
+</html>
