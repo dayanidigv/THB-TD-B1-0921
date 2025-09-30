@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .game-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        .game-board {
+            background: linear-gradient(45deg, #f8f9fa, #ffffff);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            border: 2px solid #dee2e6;
+        }
+        .guess-input {
+            width: 150px;
+            height: 60px;
+            font-size: 1.5rem;
+            text-align: center;
+            border: 3px solid #667eea;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+        .guess-input:focus {
+            box-shadow: 0 0 0 0.3rem rgba(102, 126, 234, 0.3);
+            transform: scale(1.05);
+        }
+        .guess-btn {
+            height: 60px;
+            width: 120px;
+            font-size: 1.2rem;
+            border-radius: 15px;
+            font-weight: bold;
+        }
+        .result-card {
+            min-height: 120px;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+        .hint-card {
+            background: linear-gradient(45deg, #17a2b8, #138496);
+            color: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .stats-card {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        .history-item {
+            background-color: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s ease;
+        }
+        .history-item:hover {
+            transform: translateX(5px);
+        }
+        .difficulty-btn {
+            border-radius: 20px;
+            padding: 8px 20px;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        .difficulty-btn.active {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .celebration {
+            animation: bounce 0.6s ease-in-out;
+        }
+        @keyframes bounce {
+            0%, 20%, 60%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            80% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <div class="game-container p-4">
+            <h1 class="text-center text-primary mb-4">
+                🎯 Number Guessing Game
+            </h1>
+            <p class="text-center text-muted mb-4">
+                I'm thinking of a number. Can you guess it?
+            </p>
+            
+            <!-- Difficulty Selection -->
+            <div class="text-center mb-4">
+                <h6>Choose Difficulty:</h6>
+                <button class="btn btn-outline-success difficulty-btn active" onclick="setDifficulty('easy')">
+                    Easy (1-50)
+                </button>
+                <button class="btn btn-outline-warning difficulty-btn" onclick="setDifficulty('medium')">
+                    Medium (1-100)
+                </button>
+                <button class="btn btn-outline-danger difficulty-btn" onclick="setDifficulty('hard')">
+                    Hard (1-500)
+                </button>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <!-- Game Board -->
+                    <div class="game-board">
+                        <div id="gameStatus" class="mb-4">
+                            <h4>🤔 I'm thinking of a number between <span id="rangeDisplay">1 and 50</span></h4>
+                            <p class="text-muted">Make your guess below!</p>
+                        </div>
+                        
+                        <!-- Input Section -->
+                        <div class="d-flex justify-content-center align-items-center gap-3 mb-4">
+                            <input type="number" id="guessInput" class="form-control guess-input" 
+                                   placeholder="?" min="1" max="50">
+                            <button class="btn btn-primary guess-btn" id="submitGuess">
+                                <i class="bi bi-search"></i> Guess!
+                            </button>
+                        </div>
+                        
+                        <!-- Result Display -->
+                        <div id="resultDisplay" class="result-card bg-light d-flex align-items-center justify-content-center">
+                            <p class="text-muted mb-0">
+                                <i class="bi bi-lightbulb display-4 d-block mb-2"></i>
+                                Your first guess will appear here!
+                            </p>
+                        </div>
+                        
+                        <!-- Game Controls -->
+                        <div class="mt-4">
+                            <button class="btn btn-success me-2" id="newGame">
+                                <i class="bi bi-arrow-clockwise"></i> New Game
+                            </button>
+                            <button class="btn btn-info me-2" id="giveHint">
+                                <i class="bi bi-lightbulb"></i> Hint
+                            </button>
+                            <button class="btn btn-warning" id="giveUp">
+                                <i class="bi bi-flag"></i> Give Up
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <!-- Statistics -->
+                    <div class="stats-card">
+                        <h5><i class="bi bi-graph-up"></i> Game Stats</h5>
+                        <div class="row text-center mt-3">
+                            <div class="col-6">
+                                <h3 id="attempts" class="mb-1">0</h3>
+                                <small>Attempts</small>
+                            </div>
+                            <div class="col-6">
+                                <h3 id="gamesWon" class="mb-1">0</h3>
+                                <small>Games Won</small>
+                            </div>
+                        </div>
+                        <hr class="text-white">
+                        <div class="row text-center">
+                            <div class="col-6">
+                                <h3 id="bestScore" class="mb-1">-</h3>
+                                <small>Best Score</small>
+                            </div>
+                            <div class="col-6">
+                                <h3 id="hintsUsed" class="mb-1">0</h3>
+                                <small>Hints Used</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Hints Section -->
+                    <div id="hintsSection" style="display: none;">
+                        <h6>💡 Hints:</h6>
+                        <div id="hintsList">
+                            <!-- Hints will be added here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Guess History -->
+                    <div class="mt-3">
+                        <h6>📝 Guess History:</h6>
+                        <div id="guessHistory" style="max-height: 200px; overflow-y: auto;">
+                            <p class="text-muted text-center py-3">No guesses yet</p>
+                        </div>
+                        <button class="btn btn-sm btn-outline-secondary w-100 mt-2" onclick="clearHistory()">
+                            Clear History
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Activity Log -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <h6>🎮 Game Log:</h6>
+                    <div id="gameLog" class="bg-light rounded p-3" style="max-height: 150px; overflow-y: auto; font-size: 0.9rem;">
+                        <p class="text-muted">Game activities will be logged here...</p>
+                    </div>
+                    <button class="btn btn-sm btn-outline-secondary mt-2" onclick="clearLog()">
+                        Clear Log
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="number-guessing.js"></script>
+</body>
+</html>

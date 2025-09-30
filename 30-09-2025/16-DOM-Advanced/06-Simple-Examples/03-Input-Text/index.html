@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Input Text</title>
+</head>
+<body>
+    <h1>Input Text Example</h1>
+    <input type="text" id="userInput" placeholder="Type something here">
+    <button onclick="showInput()">Show What I Typed</button>
+    <p id="result"></p>
+    
+    <script>
+        function showInput() {
+            let userText = document.getElementById("userInput").value;
+            document.getElementById("result").innerHTML = "You typed: " + userText;
+        }
+    </script>
+    
+    <p><a href="../index.html">Back to Simple Examples</a></p>
+</body>
+</html>
