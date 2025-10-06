@@ -1,5 +1,5 @@
 // Fun Games to Play
-
+ 
 // Guess the secret number
 function guessNumber() {
     let secretNumber = Math.floor(Math.random() * 10) + 1;
@@ -21,7 +21,7 @@ function rockPaperScissors() {
     let choices = ["rock", "paper", "scissors"];
     let computer = choices[Math.floor(Math.random() * 3)];
     let player = prompt("Choose: rock, paper, or scissors").toLowerCase();
-    
+     
     if (player) {
         console.log("Player:", player);
         console.log("Computer:", computer);

@@ -17,13 +17,15 @@ function showTime() {
     console.log("Current time:", timeText);
     document.getElementById("result").innerHTML = "Time: " + timeText;
 }
-
+ 
 // Find out how old someone is
 function showAge() {
     let birthYear = prompt("What year were you born?");
     
-    if (birthYear) {
+    if (birthYear && typeof birthYear === 'string' && !isNaN(birthYear) && birthYear > 1900 && birthYear <= new Date().getFullYear()) {
+        
         let currentYear = new Date().getFullYear();
+        
         let age = currentYear - birthYear;
         
         console.log("Birth year:", birthYear);
@@ -31,5 +33,8 @@ function showAge() {
         console.log("Age:", age);
         
         document.getElementById("result").innerHTML = "You are " + age + " years old!";
+    }else{
+        alert("Please enter a valid year.");
     }
 }
+

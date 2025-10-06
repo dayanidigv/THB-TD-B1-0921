@@ -9,3 +9,14 @@ function showName() {
     
     console.log("Name entered:", name);
 }
+
+function changes(e) {
+    // console.log("Input changed:", e.value);
+
+    console.log(e);
+}
+
+
+
+let e = document.querySelector('input[type="text"]');
+console.log(e);  // "Daya"
