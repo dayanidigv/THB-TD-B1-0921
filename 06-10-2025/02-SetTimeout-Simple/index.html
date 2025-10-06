@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>setTimeout & setInterval Simple</title>
+    <style>
+        .section {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #007bff;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .stop-btn {
+            background: #dc3545;
+        }
+        .stop-btn:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <h1>setTimeout & setInterval Examples</h1>
+    <p>Learning how to delay code and repeat actions</p>
+    
+    <div class="section">
+        <h3>setTimeout (Do Once After Waiting)</h3>
+        <button onclick="sayHelloLater()">Say Hello in 2 Seconds</button>
+        <button onclick="countToThree()">Count to Three Slowly</button>
+        <button onclick="showMessage()">Show Message After Delay</button>
+    </div>
+
+    <div class="section">
+        <h3>setInterval (Repeat Over and Over)</h3>
+        <button onclick="startClock()">Start Clock</button>
+        <button onclick="stopClock()" class="stop-btn">Stop Clock</button>
+        <button onclick="startCounter()">Start Counter</button>
+        <button onclick="flashMessage()">Flash Message</button>
+    </div>
+    
+    <div id="messages"></div>
+     
+    <script src="settimeout.js"></script>
+</body>
+</html>

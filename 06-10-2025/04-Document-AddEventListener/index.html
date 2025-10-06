@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head >
+    <title>Document AddEventListener - Simple</title>
+    <style>
+        button {
+            padding: 10px 15px;
+            margin: 10px 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .click-btn { background: lightblue; }
+        .hover-btn { background: lightgreen; }
+        .output {
+            background: #f5f5f5;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            min-height: 100px;
+        }
+    </style>
+</head> 
+<body>
+    <h1>Document AddEventListener Examples</h1>
+    
+    <h2>What is addEventListener?</h2>
+    <p>addEventListener lets you listen for things that happen on the webpage:</p>
+    <ul>
+        <li>When someone clicks a button</li>
+        <li>When the page finishes loading</li>
+        <li>When someone moves the mouse</li>
+    </ul>
+
+    <h2>Try These Examples:</h2>
+    
+    <button id="clickBtn" onclick="callbtn()" class="click-btn">Click Me!</button>
+    <button id="hoverBtn" class="hover-btn">Hover Over Me!</button>
+    <button onclick="clearOutput()">Clear Output</button>
+    
+    <h3>Output:</h3>
+    <div id="output" class="output">
+        Watch this space when you interact with buttons!
+    </div>
+    
+    <script src="eventlistener.js"></script>
+
+</body>
+</html>

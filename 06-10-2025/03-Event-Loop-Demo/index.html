@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Event Loop Demo</title>
+    <style>
+        .demo-box {
+            background: #f0f0f0;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .step {
+            padding: 5px;
+            margin: 5px 0;
+            border-radius: 3px;
+        }
+        .immediate { background: #d4edda; }
+        .delayed { background: #fff3cd; }
+        .final { background: #cce5ff; }
+    </style>
+</head>
+<body>
+    <h1>Event Loop Demo</h1>
+    <p>Watch how JavaScript handles different types of code</p>
+    
+    <button onclick="runCompleteDemo()">Run Complete Demo</button>
+    <button onclick="clearOutput()">Clear Output</button>
+    
+    <div class="demo-box">
+        <h3>What JavaScript Does:</h3>
+        <div id="explanation"></div>
+    </div>
+
+    <div id="loading">Loading...</div>
+    
+    <div class="demo-box">
+        <h3>Output Order:</h3>
+        <div id="output"></div>
+    </div>
+    
+    <script src="demo.js"></script>
+</body>
+</html>

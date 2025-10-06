@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>08 - Promise Examples</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .promise-container {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        .success { background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin: 5px 0; }
+        .error { background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px; margin: 5px 0; }
+        .pending { background-color: #fff3cd; color: #856404; padding: 10px; border-radius: 5px; margin: 5px 0; }
+        .example-card {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #007bff;
+        }
+        .chain-step {
+            background-color: #e3f2fd;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border-left: 3px solid #2196f3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="promise-container">
+            <h1>🔗 Promise Examples</h1>
+            <p class="lead">Real-world examples of promises in action!</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Real World Promise Examples</h3>
+                        
+                        <div class="example-card">
+                            <h5>🍕 Pizza Ordering</h5>
+                            <p>Order a pizza and wait for delivery!</p>
+                            <button class="btn btn-primary" onclick="orderPizza()">Order Pizza</button>
+                        </div>
+
+                        <div class="example-card">
+                            <h5>📁 File Download</h5>
+                            <p>Download a file from the internet!</p>
+                            <button class="btn btn-success" onclick="downloadFile()">Download File</button>
+                        </div>
+
+                        <div class="example-card">
+                            <h5>🌤️ Weather Check</h5>
+                            <p>Get the weather for your city!</p>
+                            <button class="btn btn-info" onclick="getWeather()">Check Weather</button>
+                        </div>
+
+                        <div class="example-card">
+                            <h5>🔗 Promise Chaining</h5>
+                            <p>Do multiple tasks one after another!</p>
+                            <button class="btn btn-warning" onclick="promiseChain()">Start Chain</button>
+                        </div>
+
+                        <div class="example-card">
+                            <h5>🏁 Multiple Promises</h5>
+                            <p>Do several things at the same time!</p>
+                            <button class="btn btn-secondary" onclick="multiplePromises()">Start All</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Output:</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="output">Click a button to see promises in action!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Promise Chaining Explained:</h4>
+                        <p>You can connect promises together like a chain:</p>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="chain-step">
+                                    <strong>Step 1:</strong> Start cooking
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="chain-step">
+                                    <strong>Step 2:</strong> Add ingredients
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="chain-step">
+                                    <strong>Step 3:</strong> Serve the meal
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mt-2">Each step waits for the previous one to finish!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <a href="../07-Promise-Basics/index.html" class="btn btn-secondary">← Back to Promise Basics</a>
+            <a href="../09-Promise-vs-Callbacks/index.html" class="btn btn-primary">Next: Promise vs Callbacks →</a>
+        </div>
+    </div>
+
+    <script src="examples.js"></script>
+</body>
+</html>
