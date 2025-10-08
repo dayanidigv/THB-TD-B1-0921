@@ -60,9 +60,15 @@ function orderPizza() {
     }
     
     // Order process: call place, wait for delivery, eat pizza
-    callPizzaPlace(function() {
-        waitForDelivery(eatPizza);
-    });
+    // callPizzaPlace(function() {
+    //     waitForDelivery(eatPizza);
+    // });
+
+    callPizzaPlace(
+        waitForDelivery(
+            eatPizza
+        )
+    );
 }
 
 function downloadFile() {

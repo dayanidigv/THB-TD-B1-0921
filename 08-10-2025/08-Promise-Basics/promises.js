@@ -1,22 +1,40 @@
 // Promise Basics - A better way than callbacks!
 
+// call() - 1
+// object.method() - 2
+// object.method.call() - 3
+// object.method.call(object) - 4
+
 function simplePromise() {
     console.log("=== Simple Promise ===");
     document.getElementById("output").innerHTML = '<div class="pending">Creating a simple promise...</div>';
     
     // Creating a basic promise
     const myPromise = new Promise(function(resolve, reject) {
-        console.log("Promise is working...");
+                console.log("Promise is working...");
         
         setTimeout(function() {
             resolve("Promise completed!");
         }, 1000);
     });
-    
+
+    // If Resolve is called, .then() runs
+    // If Reject is called, .catch() runs
+
+    // getting data's from Backend, success or error
+
+    // myPromise.then();
+    // myPromise.catch();
+     
     // Using the promise
     myPromise.then(function(result) {
         console.log("Promise result:", result);
         document.getElementById("output").innerHTML = '<div class="success">Promise result: ' + result + '</div>';
+    });
+
+    myPromise.catch(function(error) {
+        console.log("Promise error:", error);
+        document.getElementById("output").innerHTML = '<div class="error">Promise error: ' + error + '</div>';
     });
 }
 
@@ -72,7 +90,7 @@ function randomPromise() {
     const randomPromise = new Promise(function(resolve, reject) {
         setTimeout(function() {
             const success = Math.random() > 0.5;
-            
+            console.log("Random success value:", success);
             if (success) {
                 resolve("Lucky! The random promise succeeded!");
             } else {

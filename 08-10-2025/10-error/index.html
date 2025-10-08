@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Try Catch Finally Examples</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .example {
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .output {
+            background: #000;
+            color: #0f0;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            margin: 15px 0;
+            min-height: 200px;
+            white-space: pre-wrap;
+        }
+        code {
+            background: #eee;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simple Try, Catch, Finally Examples</h1>
+    
+    <div class="example">
+        <h3>What is Try-Catch-Finally?</h3>
+        <p><code>try</code> - Test code that might have errors</p>
+        <p><code>catch</code> - Handle any errors that happen</p>
+        <p><code>finally</code> - Code that always runs (optional)</p>
+    </div>
+
+    <div class="example">
+        <h3>Simple Examples</h3>
+        <button onclick="example1()">Basic Try-Catch</button>
+        <button onclick="example2()">With Finally Block</button>
+        <button onclick="example3()">Division Example</button>
+        <button onclick="example4()">JSON Example</button>
+        <button onclick="clearOutput()">Clear</button>
+    </div>
+
+    <div id="output" class="output">Click a button to see examples...</div>
+
+    <script>
+        const output = document.getElementById('output');
+        
+        function clearOutput() {
+            output.textContent = 'Console cleared...';
+        }
+        
+        function log(message) {
+            output.textContent += message + '\n';
+            output.scrollTop = output.scrollHeight;
+        }
+
+        // Example 1: Basic Try-Catch
+        function example1() {
+            clearOutput();
+            log("=== Basic Try-Catch ===");
+            
+            try {
+                log("This line works fine");
+                log(undefinedVariable); // This will cause error
+            } catch (error) {
+                log("Error caught: " + error.message);
+            }
+            log("Code continues after try-catch");
+        }
+
+        // Example 2: Try-Catch-Finally
+        function example2() {
+            clearOutput();
+            log("=== Try-Catch-Finally ===");
+            
+            try {
+                log("Running code in try block");
+                throw new Error("Something went wrong!");
+            } catch (error) {
+                log("Error: " + error.message);
+            } finally {
+                log("Finally block - this always runs!");
+            }
+            log("Done!");
+        }
+
+        // Example 3: Division
+        function example3() {
+            clearOutput();
+            log("=== Division Example ===");
+            
+            function safeDivision(a, b) {
+                try {
+                    if (b === 0) {
+                        throw new Error("Cannot divide by zero");
+                    }
+                    let result = a / b;
+                    log("Result: " + result);
+                    return result;
+                } catch (error) {
+                    log("Error: " + error.message);
+                    return null;
+                } finally {
+                    log("Division completed");
+                }
+            }
+
+            safeDivision(10, 2);  // Works
+            safeDivision(10, 0);  // Error
+        }
+
+        // Example 4: JSON Parsing
+        function example4() {
+            clearOutput();
+            log("=== JSON Example ===");
+            
+            function parseJSON(text) {
+                try {
+                    let data = JSON.parse(text);
+                    log("Parsed: " + JSON.stringify(data));
+                } catch (error) {
+                    log("Invalid JSON: " + error.message);
+                } finally {
+                    log("JSON parsing done");
+                }
+            }
+
+            parseJSON('{"name": "John"}');  // Valid
+            parseJSON('invalid json');      // Invalid
+        }
+    </script>
+</body>
+</html>

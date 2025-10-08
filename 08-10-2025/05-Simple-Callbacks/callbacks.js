@@ -39,8 +39,26 @@ function callbackWithData() {
         document.getElementById("output").innerHTML += "<p>Getting data...</p>";
         
         setTimeout(function() {
-            const data = "Hello from the data!";
-            console.log("Got data:", data);
+                let callbackData = "Here is your data!";
+
+                const result = fetch('https://api.github.com/zen');
+
+                console.log("Data received!", result);
+                result.then(response => response.text()).then(data => {
+                    console.log("Got data:", data);
+                    document.getElementById("output").innerHTML += "<p>Got data: " + data + "</p>";
+                    callback(data); // Pass data to callback
+                })
+                .catch(error => {
+                    console.error("Error fetching data:", error);
+                     document.getElementById("output").innerHTML += "<p >callBack " + callbackData + "</p>";
+                });
+                result.catch(error => {
+                    console.error("Error fetching data:", error);
+                    document.getElementById("output").innerHTML += "<p >callBack " + callbackData + "</p>";
+                });
+                return; // Prevent callback(data) from running twice
+
             callback(data); // Pass data to callback
         }, 1500);
     }
@@ -80,11 +98,22 @@ function multipleCallbacks() {
     }
     
     // Chain them together
-    step1(function(result1) {
-        step2(result1, function(result2) {
-            step3(result2);
-        });
-    });
+    step1(
+        
+        function(result1) {
+
+            step2(result1, 
+
+                function(result2) {
+
+                    step3(result2);
+
+                }
+            );
+
+        }
+
+);
 }
 
 console.log("Callbacks are like saying: 'When you're done, call me back!'");
