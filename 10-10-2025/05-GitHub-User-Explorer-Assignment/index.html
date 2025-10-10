@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub User Explorer Assignment</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+       <!-- Assignment Header -->
+    <header class="header">
+        <h1>GitHub User Explorer</h1>
+        <p>Assignment: Learn HTTP GET requests, JSON processing, Async/Await, and API error handling</p>
+    </header>
+
+    <!-- Main Dashboard -->
+    <main class="dashboard">
+        <!-- Search Section -->
+        <section class="search-section">
+            <h2>Search GitHub Users</h2>
+            <div class="search-container">
+                <input type="text" id="usernameInput" placeholder="Enter GitHub username (e.g., dayanidigv, octocat, torvalds)" autocomplete="off">
+                <button id="searchBtn">Find User</button>
+            </div>
+            <div id="loadingMessage" class="loading hidden">Loading user data...</div>
+        </section>
+
+        <!-- User Profile Section -->
+        <section class="user-profile">
+            <h2>User Profile</h2>
+            <div id="userProfileCard" class="profile-card hidden">
+                <!-- User profile will be displayed here -->
+                <div class="profile-header">
+                    <img id="userAvatar" src="" alt="User Avatar" class="avatar">
+                    <div class="profile-info">
+                        <h3 id="userName">User Name</h3>
+                        <p id="userUsername">@username</p>
+                        <p id="userBio">User bio will appear here</p>
+                    </div>
+                </div>
+                <div class="profile-details">
+                    <div class="detail">
+                        <span>Company:</span>
+                        <span id="userCompany">Company</span>
+                    </div>
+                    <div class="detail">
+                        <span>Location:</span>
+                        <span id="userLocation">Location</span>
+                    </div>
+                    <div class="detail">
+                        <span>Website:</span>
+                        <a id="userBlog" href="#" target="_blank" rel="noopener">Website</a>
+                    </div>
+                    <div class="detail">
+                        <span>Joined:</span>
+                        <span id="userJoined">Date</span>
+                    </div>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat">
+                        <span id="repoCount">0</span>
+                        <span>Repositories</span>
+                    </div>
+                    <div class="stat">
+                        <span id="followerCount">0</span>
+                        <span>Followers</span>
+                    </div>
+                    <div class="stat">
+                        <span id="followingCount">0</span>
+                        <span>Following</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Repositories Section -->
+        <section class="repositories-section">
+            <h2>Public Repositories</h2>
+            <div id="repositoriesContainer" class="repositories-container hidden">
+                <!-- Repositories will be displayed here -->
+            </div>
+        </section>
+
+        <!-- Recent Activity Section -->
+        <section class="activity-section">
+            <h2>Recent Activity</h2>
+            <div id="activityContainer" class="activity-container hidden">
+                <!-- Recent activity will be displayed here -->
+            </div>
+        </section>
+
+        <!-- Followers & Following Section -->
+        <section class="social-section">
+            <div class="social-grid">
+                <div class="followers-section">
+                    <h3>Followers</h3>
+                    <div id="followersContainer" class="followers-container">
+                        <!-- Followers will be displayed here -->
+                    </div>
+                </div>
+                <div class="following-section">
+                    <h3>Following</h3>
+                    <div id="followingContainer" class="following-container">
+                        <!-- Following will be displayed here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Organizations Section -->
+        <section class="organizations-section">
+            <h2>Organizations</h2>
+            <div id="organizationsContainer" class="organizations-container hidden">
+                <!-- Organizations will be displayed here -->
+            </div>
+        </section>
+
+        <!-- Error Message Section -->
+        <section id="errorSection" class="error-section hidden">
+            <div class="error-message">
+                <h3>Error</h3>
+                <p id="errorText">Something went wrong!</p>
+                <button id="tryAgainBtn">Try Again</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Learning Instructions -->
+    <aside class="instructions">
+        <h3>ASSIGNMENT FEATURES:</h3>
+        <ul>
+            <li>HTTP GET requests with proper error handling</li>
+            <li>JSON data parsing and validation</li>
+            <li>Async/Await implementation patterns</li>
+            <li>API status code management</li>
+            <li>User search and profile display</li>
+            <li>Repository listing with details</li>
+            <li>Recent activity timeline</li>
+            <li>Followers and following lists</li>
+            <li>Organization memberships</li>
+            <li>Error handling and loading states</li>
+        </ul>
+        <p><strong>Focus:</strong> Master HTTP requests, JSON processing, and async patterns</p>
+        <p><strong>APIs to Use:</strong> Users, Repos, Events, Followers, Following, Organizations</p>
+        <p><strong>Test users:</strong> dayanidigv, octocat, torvalds, gaearon</p>
+    </aside>
+
+    <!-- JavaScript Files -->
+    <script src="github-api.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

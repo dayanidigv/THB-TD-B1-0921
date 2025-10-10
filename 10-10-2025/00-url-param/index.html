@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Buy Page</title>
+</head>
+<body>
+  <h2>Buy Page</h2>
+  <p id="product"></p>
+  <p id="price"></p>
+
+  <script>
+
+    // window -> the browser window
+    // document -> the page
+
+    console.log(window.location.href);
+
+    // Get URL parameters
+    const params = new URLSearchParams(window.location.search);
+
+    console.log(params.get("name"));
+
+    const product = params.get("product");
+    const price = params.get("price");
+
+    // Display them
+    document.getElementById("product").textContent = "Product: " + (product || "N/A");
+    document.getElementById("price").textContent = "Price: " + (price || "N/A");
+  </script>
+
+
+</body>
+</html>

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub API Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f6f8fa;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .example {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            align-items: center;
+        }
+        input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #e1e4e8;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        input:focus {
+            outline: none;
+            border-color: #0366d6;
+        }
+        button {
+            padding: 10px 20px;
+            background: #0366d6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0256cc;
+        }
+        .user-card {
+            background: white;
+            border: 1px solid #e1e4e8;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            display: none;
+        }
+        .user-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid #e1e4e8;
+        }
+        .user-info h3 {
+            margin: 0;
+            color: #333;
+            font-size: 24px;
+        }
+        .username {
+            color: #666;
+            font-size: 18px;
+            margin: 5px 0;
+        }
+        .bio {
+            color: #586069;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .stat {
+            text-align: center;
+            padding: 10px;
+            background: #f6f8fa;
+            border-radius: 6px;
+            min-width: 80px;
+        }
+        .stat-number {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0366d6;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+        }
+        .repos {
+            margin-top: 20px;
+        }
+        .repo-item {
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 10px 0;
+            background: #fafbfc;
+        }
+        .repo-name {
+            font-weight: bold;
+            color: #0366d6;
+            margin-bottom: 5px;
+        }
+        .repo-desc {
+            color: #586069;
+            margin: 5px 0;
+        }
+        .repo-stats {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+        .loading {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+        .error {
+            background: #ffeaea;
+            border: 1px solid #ff6b6b;
+            color: #d63031;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+        .github-link {
+            display: inline-block;
+            background: #24292e;
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+        .github-link:hover {
+            background: #1b1f23;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>🐙 GitHub User Finder</h1>
+    
+    <div class="example">
+        <h3>Search GitHub Users</h3>
+        <p>Enter a GitHub username to see their profile and repositories</p>
+        
+        <div class="search-box">
+            <input type="text" id="usernameInput" placeholder="Enter GitHub username (e.g., dayanidigv)" value="dayanidigv">
+            <button onclick="searchUser()">Search User</button>
+            <button onclick="searchRepos()">Get Repos</button>
+            <button onclick="showJSON()">Show JSON</button>
+            <button onclick="clearResults()">Clear</button>
+        </div>
+    </div>
+
+    <div id="loadingMessage" class="loading" style="display: none;">
+        🔍 Searching GitHub...
+    </div>
+
+    <div id="errorMessage" class="error" style="display: none;"></div>
+
+    <div id="userCard" class="user-card">
+        <div class="user-header">
+            <img id="userAvatar" class="avatar" src="" alt="User Avatar">
+            <div class="user-info">
+                <h3 id="userName"></h3>
+                <div id="userUsername" class="username"></div>
+                <div id="userBio" class="bio"></div>
+                <a id="userLink" class="github-link" href="" target="_blank">View on GitHub</a>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat">
+                <div id="repoCount" class="stat-number">0</div>
+                <div class="stat-label">Repositories</div>
+            </div>
+            <div class="stat">
+                <div id="followerCount" class="stat-number">0</div>
+                <div class="stat-label">Followers</div>
+            </div>
+            <div class="stat">
+                <div id="followingCount" class="stat-number">0</div>
+                <div class="stat-label">Following</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="reposSection" class="example" style="display: none;">
+        <h3>📚 Recent Repositories</h3>
+        <div id="reposList"></div>
+    </div>
+
+    <div id="jsonSection" class="example" style="display: none;">
+        <h3>🔍 Raw JSON Data</h3>
+        <p>This is the actual data returned by the GitHub API:</p>
+        <div id="jsonDisplay" style="background: #f6f8fa; padding: 15px; border-radius: 6px; font-family: monospace; font-size: 12px; overflow-x: auto; white-space: pre-wrap; border: 1px solid #e1e4e8;"></div>
+    </div>
+
+    <script>
+
+        // Display user information
+        function displayUser(user) {
+            document.getElementById('userAvatar').src = user.avatar_url;
+            document.getElementById('userName').textContent = user.name || user.login;
+            document.getElementById('userUsername').textContent = `@${user.login}`;
+            
+            // Handle bio with the actual bio from dayanidigv
+            const bio = user.bio || 'No bio available';
+            document.getElementById('userBio').textContent = bio;
+            
+            document.getElementById('userLink').href = user.html_url;
+            
+            document.getElementById('repoCount').textContent = user.public_repos;
+            document.getElementById('followerCount').textContent = user.followers;
+            document.getElementById('followingCount').textContent = user.following;
+            
+            document.getElementById('userCard').style.display = 'block';
+            
+            // Store user data for JSON display
+            window.currentUserData = user;
+        }
+
+        // Display repositories
+        function displayRepos(repos) {
+            const reposList = document.getElementById('reposList');
+            reposList.innerHTML = '';
+            
+            if (repos.length === 0) {
+                reposList.innerHTML = '<p>No public repositories found.</p>';
+            } else {
+                repos.forEach(repo => {
+                    const repoItem = document.createElement('div');
+                    repoItem.className = 'repo-item';
+                    
+                    repoItem.innerHTML = `
+                        <div class="repo-name">${repo.name}</div>
+                        <div class="repo-desc">${repo.description || 'No description'}</div>
+                        <div class="repo-stats">
+                            <span>⭐ ${repo.stargazers_count} stars</span>
+                            <span>🔧 ${repo.language || 'Unknown'}</span>
+                            <span>📅 Updated ${new Date(repo.updated_at).toLocaleDateString()}</span>
+                        </div>
+                    `;
+                    
+                    reposList.appendChild(repoItem);
+                });
+            }
+            
+            document.getElementById('reposSection').style.display = 'block';
+        }
+
+        // Show loading
+        function showLoading() {
+            document.getElementById('loadingMessage').style.display = 'block';
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        // Hide loading
+        function hideLoading() {
+            document.getElementById('loadingMessage').style.display = 'none';
+        }
+
+        // Show error
+        function showError(message) {
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('errorMessage').style.display = 'block';
+            hideLoading();
+        }
+
+        // Search for user
+        async function searchUser() {
+            const username = document.getElementById('usernameInput').value.trim();
+            
+            if (!username) {
+                showError('Please enter a username');
+                return;
+            }
+            
+            showLoading();
+            
+            try {
+                const user = await getGitHubUser(username);
+                hideLoading();
+                displayUser(user);
+                document.getElementById('errorMessage').style.display = 'none';
+            } catch (error) {
+                showError(`Error: ${error.message}`);
+            }
+        }
+
+        // Search for repositories
+        async function searchRepos() {
+            const username = document.getElementById('usernameInput').value.trim();
+            
+            if (!username) {
+                showError('Please enter a username');
+                return;
+            }
+            
+            showLoading();
+            
+            try {
+                const repos = await getUserRepos(username);
+                hideLoading();
+                displayRepos(repos);
+                document.getElementById('errorMessage').style.display = 'none';
+            } catch (error) {
+                showError(`Error: ${error.message}`);
+            }
+        }
+
+        // Clear all results
+        function clearResults() {
+            document.getElementById('userCard').style.display = 'none';
+            document.getElementById('reposSection').style.display = 'none';
+            document.getElementById('jsonSection').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('usernameInput').value = '';
+        }
+
+        // Show JSON data
+        async function showJSON() {
+            const username = document.getElementById('usernameInput').value.trim();
+            
+            if (!username) {
+                showError('Please enter a username');
+                return;
+            }
+            
+            showLoading();
+            
+            try {
+                const user = await getGitHubUser(username);
+                hideLoading();
+                
+                // Display the raw JSON data
+                document.getElementById('jsonDisplay').textContent = JSON.stringify(user, null, 2);
+                document.getElementById('jsonSection').style.display = 'block';
+                document.getElementById('errorMessage').style.display = 'none';
+            } catch (error) {
+                showError(`Error: ${error.message}`);
+            }
+        }
+
+        // Allow Enter key to search
+        document.getElementById('usernameInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                console.log("Enter key pressed");
+                searchUser();
+            }
+        });
+
+        // Load external script
+        window.addEventListener('load', function() {
+            const script = document.createElement('script');
+            script.src = 'github.js';
+            document.head.appendChild(script);
+        });
+    </script>
+</body>
+</html>

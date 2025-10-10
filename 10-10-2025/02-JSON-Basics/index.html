@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple JSON Examples</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .example {
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .output {
+            background: #000;
+            color: #0f0;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            margin: 15px 0;
+            min-height: 200px;
+            white-space: pre-wrap;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        .json-box {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simple JSON Examples</h1>
+    
+    <div class="example">
+        <h3>What is JSON?</h3>
+        <p><strong>JSON</strong> = JavaScript Object Notation</p>
+        <p>It's like sending a message that looks like an object</p>
+        <p>Used to store and send data between computers</p>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+                <h4>JavaScript Object:</h4>
+                <div class="json-box">{ name: "John", age: 25 }</div>
+            </div>
+            <div>
+                <h4>JSON Text:</h4>
+                <div class="json-box">{"name": "John", "age": 25}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="example">
+        <h3>Try JSON Yourself</h3>
+        <p>Type an object (without quotes around keys):</p>
+        <textarea id="objectInput" rows="3" placeholder='{ name: "John", age: 25, city: "New York" }'></textarea>
+        
+        <button onclick="makeJSON()">Make JSON</button>
+        <button onclick="clearAll()">Clear</button>
+        
+        <p>JSON Result:</p>
+        <div id="jsonResult" class="json-box">JSON will appear here...</div>
+    </div>
+
+    <div class="example">
+        <h3>Examples</h3>
+        <button onclick="example1()">Simple Object</button>
+        <button onclick="example2()">Person Info</button>
+        <button onclick="example3()">Error Handling</button>
+        <button onclick="clearOutput()">Clear</button>
+    </div>
+
+    <div id="output" class="output">Click a button to see JSON examples...</div>
+
+    <script>
+        const output = document.getElementById('output');
+        
+        function clearOutput() {
+            output.textContent = 'Output cleared...';
+        }
+        
+        function log(message) {
+            output.textContent += message + '\n';
+            output.scrollTop = output.scrollHeight;
+        }
+
+        // Convert object to JSON
+        function makeJSON() {
+            const objectInput = document.getElementById('objectInput').value;
+            const jsonResult = document.getElementById('jsonResult');
+            
+            try {
+                console.log("Original object:", objectInput);
+                const obj = eval('(' + objectInput + ')');
+                console.log("Converted object:", obj);
+
+                const jsonString = JSON.stringify(obj, null, 2);
+                jsonResult.textContent = jsonString;
+            } catch (error) {
+                jsonResult.textContent = 'Error: ' + error.message;
+            }
+        }
+
+        function clearAll() {
+            document.getElementById('objectInput').value = '';
+            document.getElementById('jsonResult').textContent = 'JSON will appear here...';
+        }
+
+        // Example 1: Simple Object
+        function example1() {
+            clearOutput();
+            log("=== Simple Object ===");
+            
+            const person = {
+                name: "Alice",
+                age: 30,
+                city: "London"
+            };
+            
+            log("JavaScript Object:");
+            log(JSON.stringify(person, null, 2));
+            
+            const jsonText = JSON.stringify(person);
+            log("\nAs JSON text:");
+            log(jsonText);
+            
+            const backToObject = JSON.parse(jsonText);
+            log("\nBack to object:");
+            log("Name: " + backToObject.name);
+            log("Age: " + backToObject.age);
+        }
+
+        // Example 2: Person Info
+        function example2() {
+            clearOutput();
+            log("=== Person Info ===");
+            
+            const student = {
+                id: 123,
+                name: "John",
+                email: "john@school.com",
+                hobbies: ["reading", "gaming"],
+                active: true
+            };
+            
+            log("Student data:");
+            log(JSON.stringify(student, null, 2));
+            
+            log("\nAccessing data:");
+            log("Name: " + student.name);
+            log("First hobby: " + student.hobbies[0]);
+            log("Is active: " + student.active);
+        }
+
+        // Example 3: Error Handling
+        function example3() {
+            clearOutput();
+            log("=== Error Handling ===");
+            
+            function safeParseJSON(text) {
+                try {
+                    const result = JSON.parse(text);
+                    log("✅ Worked: " + JSON.stringify(result));
+                    return result;
+                } catch (error) {
+                    log("❌ Error: " + error.message);
+                    return null;
+                }
+            }
+
+            log("Testing good JSON:");
+            safeParseJSON('{"name": "Good"}');
+            
+            log("\nTesting bad JSON:");
+            safeParseJSON('{"name": "Bad"');  // Missing }
+            
+            log("\nProgram continues after errors!");
+        }
+    </script>
+
+    <script src="demo.js"></script>
+</body>
+</html>

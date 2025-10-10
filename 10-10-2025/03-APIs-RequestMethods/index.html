@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple APIs & Request Methods</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .example {
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .method-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .method-card {
+            background: white;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+            border-left: 4px solid #007bff;
+        }
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .status-card {
+            padding: 8px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            font-size: 12px;
+        }
+        .status-2xx { background: #28a745; }
+        .status-4xx { background: #dc3545; }
+        .status-5xx { background: #6c757d; }
+        
+        button {
+            padding: 10px 20px;
+            background: #17a2b8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #138496;
+        }
+        .get-btn { background: #28a745; }
+        .post-btn { background: #007bff; }
+        
+        .output {
+            background: #000;
+            color: #0f0;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            margin: 15px 0;
+            min-height: 200px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simple APIs & Request Methods</h1>
+    
+    <div class="example">
+        <h3>What is an API?</h3>
+        <p><strong>API</strong> = Application Programming Interface</p>
+        <p>Like ordering food at a restaurant:</p>
+        <p>📱 <strong>You (app)</strong> → 🍽️ <strong>Waiter (API)</strong> → 👨‍🍳 <strong>Kitchen (server)</strong></p>
+        <p>The waiter takes your order and brings back food (data)</p>
+    </div>
+
+    <div class="example">
+        <h3>Request Methods</h3>
+        <div class="method-grid">
+            <div class="method-card">
+                <h4 style="color: #28a745;">GET</h4>
+                <p>📖 Read data</p>
+            </div>
+            <div class="method-card">
+                <h4 style="color: #007bff;">POST</h4>
+                <p>✏️ Create data</p>
+            </div>
+            <div class="method-card">
+                <h4 style="color: #ffc107;">PUT</h4>
+                <p>🔄 Update data</p>
+            </div>
+            <div class="method-card">
+                <h4 style="color: #dc3545;">DELETE</h4>
+                <p>🗑️ Remove data</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="example">
+        <h3>Status Codes</h3>
+        <div class="status-grid">
+            <div class="status-card status-2xx">200 - OK ✅</div>
+            <div class="status-card status-2xx">201 - Created ✅</div>
+            <div class="status-card status-4xx">400 - Bad Request ❌</div>
+            <div class="status-card status-4xx">404 - Not Found ❌</div>
+            <div class="status-card status-5xx">500 - Server Error ❌</div>
+        </div>
+        <p><strong>Remember:</strong> 200s = Good, 400s = Your mistake, 500s = Server problem</p>
+    </div>
+
+    <div class="example">
+        <h3>Try Real APIs</h3>
+        <button class="get-btn" onclick="testGET()">GET - Get User</button>
+        <button class="post-btn" onclick="testPOST()">POST - Create Post</button>
+        <button onclick="testErrors()">Test Error Handling</button>
+        <button onclick="clearOutput()">Clear</button>
+        
+        <div id="output" class="output">Click a button to test APIs...</div>
+    </div>
+
+    <script>
+        const output = document.getElementById('output');
+        
+        function clearOutput() {
+            output.textContent = 'Output cleared...';
+        }
+        
+        function log(message) {
+            output.textContent += message + '\n';
+            output.scrollTop = output.scrollHeight;
+        }
+
+        // Test GET Request
+        async function testGET() {
+            clearOutput();
+            log("=== GET Request ===");
+            log("Getting user data...");
+            
+            try {
+                const response = await fetch('https://jsonplaceholder.typicode.com/users/1');
+                
+                log(`Status: ${response.status}`);
+                
+                if (response.ok) {
+                    const user = await response.json();
+                    log("✅ Success!");
+                    log(`Name: ${user.name}`);
+                    log(`Email: ${user.email}`);
+                    log(`Phone: ${user.phone}`);
+                } else {
+                    log("❌ Request failed");
+                }
+                
+            } catch (error) {
+                log("❌ Network error: " + error.message);
+            }
+        }
+
+        // Test POST Request
+        async function testPOST() {
+            clearOutput();
+            log("=== POST Request ===");
+            log("Creating new post...");
+            
+            try {
+                const newPost = {
+                    title: "My New Post",
+                    body: "This is my post content",
+                    userId: 1
+                };
+                
+                log("Sending data:");
+                log(JSON.stringify(newPost, null, 2));
+
+                // fetch(url) -> it's GET Method by default
+
+                // fetch(url, { method, headers, body })
+
+                console.log("typeof newPost: " + typeof newPost);
+                console.log("typeof JSON.stringify(newPost) " + typeof JSON.stringify(newPost));
+                
+                const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+                    method: 'POST', // 'POST' or 'PUT' or 'DELETE'
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newPost)
+                });
+                
+                log(`\nStatus: ${response.status}`);
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log("typeof result: " + typeof result);
+                    console.log("result: " + JSON.stringify(result, null, 2));
+                    log("✅ Post created!");
+                    log(`ID: ${result.id}`);
+                    log(`Title: ${result.title}`);
+                } else {
+                    log("❌ Failed to create post");
+                }
+                
+            } catch (error) {
+                log("❌ Error: " + error.message);
+            }
+        }
+
+        // Test Error Handling
+        async function testErrors() {
+            clearOutput();
+            log("=== Error Handling ===");
+            
+            const tests = [
+                { url: 'https://jsonplaceholder.typicode.com/users/1', desc: 'Valid URL (should work)' },
+                { url: 'https://jsonplaceholder.typicode.com/users/999', desc: 'User doesn\'t exist' },
+                { url: 'https://invalid-domain.com', desc: 'Invalid domain' }
+            ];
+            
+            for (let test of tests) {
+                log(`\n🧪 Testing: ${test.desc}`);
+                
+                try {
+                    const response = await fetch(test.url);
+                    log(`Status: ${response.status}`);
+                    
+                    if (response.status === 200) {
+                        log("✅ Success!");
+                    } else if (response.status === 404) {
+                        log("❌ Not found!");
+                    } else if (response.status >= 500) {
+                        log("❌ Server error!");
+                    } else {
+                        log("❌ Something went wrong!");
+                    }
+                    
+                } catch (error) {
+                    log("❌ Network error: " + error.message);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
