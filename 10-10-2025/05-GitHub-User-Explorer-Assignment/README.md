@@ -423,4 +423,51 @@ This assignment mirrors real-world scenarios where developers:
 - Use JSON formatter extensions for readable responses
 - Implement step-by-step console logging for complex functions
 
-Success in this assignment will provide practical experience with modern web development patterns used in professional software development environments.
+## Download Base Code & Submission via Repository
+
+The starter project for this assignment is published in the course repository. Students should use the repository below as the base code, implement their solution inside the provided folder, and submit either a GitHub link or a ZIP file.
+
+Repository (starter code):
+https://github.com/dayanidigv/THB-TD-B1-0921/tree/main/10-10-2025/05-GitHub-User-Explorer-Assignment
+
+Recommended local workflow (copy/paste commands):
+```bash
+# clone the full repository
+git clone https://github.com/dayanidigv/THB-TD-B1-0921.git
+# change into the assignment folder
+cd THB-TD-B1-0921/10-10-2025/05-GitHub-User-Explorer-Assignment
+# create a feature branch for your work
+git checkout -b student/<your-github-username>/github-explorer
+```
+
+Implementation notes:
+- Work only inside the `05-GitHub-User-Explorer-Assignment` folder. Do not modify other unrelated folders in the repo.
+- Keep the starter filenames intact: `index.html`, `app.js`, `github-api.js`, `styles.css`.
+- Add any new helper files in the same folder and update `README.md` with instructions to run your version locally.
+
+## Submission: GitHub Fork/Repo Link and Live URL
+Students must submit both a link to their GitHub repository (or fork/branch) and a live demo URL hosted via GitHub Pages.
+
+### What to submit
+1. **Repository link** — URL to your fork or branch containing your implemented code. Example:
+   - https://github.com/<your-username>/THB-TD-B1-0921/tree/<your-branch>/10-10-2025/05-GitHub-User-Explorer-Assignment
+
+2. **Live demo URL (GitHub Pages)** — URL to your hosted demo. Example formats:
+   - https://<your-username>.github.io/THB-TD-B1-0921/10-10-2025/05-GitHub-User-Explorer-Assignment/
+   - OR if you host the assignment at the root of a repository named `05-github-explorer`: https://<your-username>.github.io/05-github-explorer/
+
+Include both URLs when submitting in Google Classroom (paste links in the submission comments or assignment text box).
+
+### How to enable GitHub Pages (quick steps)
+1. Push your branch to your fork on GitHub.
+2. In your forked repository on GitHub, go to `Settings` -> `Pages`.
+3. Under `Build and deployment`, choose `Branch` and select the branch that contains your assignment (for example `gh-pages` or `main`).
+4. Save. GitHub will provide a Pages URL (may take a minute to publish).
+5. Verify the live demo URL and include it in your submission.
+
+Notes:
+- If you prefer not to use GitHub Pages, you can upload a ZIP of your assignment in Classroom instead, but a live demo is strongly recommended.
+- If the Pages URL returns a 404 initially, wait a few minutes and refresh; propagation is sometimes delayed.
+
+If you'd like, I can also provide a short student-facing template message (copy/paste) they can use in Classroom to submit their repo and live demo link. Would you like that?
+
