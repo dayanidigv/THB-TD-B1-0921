@@ -430,14 +430,19 @@ The starter project for this assignment is published in the course repository. S
 Repository (starter code):
 https://github.com/dayanidigv/THB-TD-B1-0921/tree/main/10-10-2025/05-GitHub-User-Explorer-Assignment
 
-Recommended local workflow (copy/paste commands):
+Recommended local workflow (fork -> clone -> branch) (copy/paste commands):
 ```bash
-# clone the full repository
-git clone https://github.com/dayanidigv/THB-TD-B1-0921.git
-# change into the assignment folder
+# 1) Fork the course repository on GitHub (use the web UI 'Fork' button).
+# 2) Clone your FORK to your local machine (replace <your-username>):
+git clone https://github.com/<your-username>/THB-TD-B1-0921.git
+# 3) Change into the assignment folder
 cd THB-TD-B1-0921/10-10-2025/05-GitHub-User-Explorer-Assignment
-# create a feature branch for your work
+# 4) Create a feature branch for your work (follow naming convention)
 git checkout -b student/<your-github-username>/github-explorer
+# 5) Work on your changes, commit and push to YOUR fork
+git add .
+git commit -m "Implement GitHub User Explorer - <your-username>"
+git push origin student/<your-github-username>/github-explorer
 ```
 
 Implementation notes:
