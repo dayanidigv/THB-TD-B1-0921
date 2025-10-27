@@ -42,6 +42,8 @@ function runCompleteDemo() {
     addExplanation("Now waiting for delayed code...");
 }
 
+
+
 function addOutput(text, type) {
     const output = document.getElementById("output");
     const div = document.createElement("div");

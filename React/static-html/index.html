@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Simple Site - Home</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1 class="logo">THB TD B1</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h2>Welcome to SimpleSite</h2>
+      <p>This is a minimal static HTML version of the site.</p>
+      <p><a class="btn" href="about.html">Learn more</a></p>
+    </section>
+
+    <section class="content">
+      <h3>Simple Design</h3>
+      <p>Clean layout with a header, navigation, hero and footer. Use this as a starter template.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; <span id="year"></span> SimpleSite — Built for demo</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    let a = '<h1>Hello</h1>';
+    let b = <h1>Hello</h1>; 
+
+    const element = <h1>Hello, world!</h1>;
+
+    console.log( typeof a);
+    console.log( typeof b);
+  </script>
+</body>
+</html>

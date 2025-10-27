@@ -56,6 +56,19 @@
         );
       }
 
+      // function NormalHello({ name = 'Student' }) {
+
+      //   let div = document.createElement('div');
+      //   let p = document.createElement('p');
+      //   let strong = document.createElement('strong');
+      //   strong.textContent = name;
+      //   p.textContent = 'Hello, ';
+      //   p.appendChild(strong);
+      //   p.appendChild(document.createTextNode('! Welcome to React fundamentals.'));
+      //   div.appendChild(p);
+      //   return div;
+      // }
+
 
       function About(){
         return (
@@ -86,13 +99,10 @@
 
       //  <header style="margin-bottom: 1em; background: #eee; padding: 0.5em;"></header>
 
-      function Header({ name }){
+      function Header({ name, style }){
+        const defaultStyle = { marginBottom: '1em', background: '#eee', padding: '0.5em' };
         return (
-          <header 
-          style={
-            { marginBottom: '1em', background: '#eee', padding: '0.5em' }
-          }
-          >
+          <header style={{ ...defaultStyle, ...style }}>
             <h1>Welcome, {name}!</h1>
             <nav>
               <a href="#home">Home</a> | <a href="#about">About</a>
@@ -116,19 +126,19 @@
         return (
           <footer>
             <hr />
-            <p>&copy; 2024. All rights reserved. - {name}</p>
+            <p>&copy; {new Date().getFullYear()}. All rights reserved. - {name}</p>
           </footer>
         )
       }
 
       // main access point
-      function app(){
+      function App(){
         return (
             <div>
 
               <Header 
-              name="Vimal" 
-              style={{ color: 'red' }}
+                name="Vimal" 
+                style={{ color: 'red' }}
               />
 
               <Main/>
@@ -139,7 +149,9 @@
       }
 
       // Mount Hello
-      ReactDOM.createRoot(document.getElementById('hello-root')).render(app());
+      ReactDOM.createRoot(document.getElementById('hello-root')).render(
+        <App />
+      );
 
       // 2. Counter demonstrates useState
       const { useState, useEffect } = React;
