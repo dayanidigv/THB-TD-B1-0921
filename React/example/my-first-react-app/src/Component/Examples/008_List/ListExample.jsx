@@ -8,9 +8,13 @@ export default function ListExample() {
       <h3>List Example</h3>
       <ul>
         {fruits.map((fruit, index) => (
-          <li key={index}>{fruit}</li>
+          <li key={index} className={`fruit-${index}`}>{fruit}</li>
         ))}
       </ul>
     </div>
   );
 }
+
+// 1st -> Apple, 0
+// 2nd -> Banana, 1
+// 3rd -> Orange, 2

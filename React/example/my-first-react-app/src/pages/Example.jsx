@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import FunctionComponent from '../Component/Examples/001_FunctionComponent/FunctionComponent';
 import ClassComponent from '../Component/Examples/002_ClassComponent/ClassComponent';
 import PropsExample from '../Component/Examples/003_Props/PropsExample';
@@ -11,6 +11,10 @@ import UseContextExample from '../Component/Examples/006_hooks/6.04_useContext/U
 import UseContextToggle from '../Component/Examples/006_hooks/6.04_useContext/UseContextToggle';
 import UseReducerExample from '../Component/Examples/006_hooks/6.05_useReducer/UseReducerExample';
 import UseWindowWidthExample from '../Component/Examples/006_hooks/6.06_customHook/UseWindowWidthExample';
+import UseCallbackExample from '../Component/Examples/006_hooks/6.07_useCallback/UseCallbackExample';
+import UseMemoExample from '../Component/Examples/006_hooks/6.08_useMemo/UseMemoExample';
+import UseSearchParamsExample from '../Component/Examples/006_hooks/6.09_useSearchParams/UseSearchParamsExample';
+import UseNavigateExample from '../Component/Examples/006_hooks/6.10_useNavigate/UseNavigateExample';
 import ConditionalExample from '../Component/Examples/007_Conditional/ConditionalExample';
 import ListExample from '../Component/Examples/008_List/ListExample';
 import FormValidation from '../Component/Examples/009_FormValidation/FormValidation';
@@ -24,9 +28,6 @@ import BuggyComponent from '../Component/Examples/013_ErrorBoundary/BuggyCompone
 
 function Example() {
     const [selectedTitle, setSelectedTitle] = useState('');
-
-
-
 
     const examples = useMemo(
         () => [
@@ -42,6 +43,10 @@ function Example() {
             { title: 'UseContext Toggle', component: UseContextToggle, desc: 'Interactive useContext demo with theme toggle' },
             { title: 'UseReducer Example', component: UseReducerExample, desc: 'Hook: useReducer (complex state)' },
             { title: 'UseWindowWidth Example', component: UseWindowWidthExample, desc: 'Custom hook example' },
+            { title: 'UseCallback Example', component: UseCallbackExample, desc: 'Hook: useCallback (stable handlers)' },
+            { title: 'UseMemo Example', component: UseMemoExample, desc: 'Hook: useMemo (memoize expensive computations)' },
+            { title: 'UseSearchParams Example', component: UseSearchParamsExample, desc: 'Hook: useSearchParams (read/write query params)' },
+            { title: 'UseNavigate Example', component: UseNavigateExample, desc: 'Hook: useNavigate (programmatic navigation)' },
             { title: 'Conditional Example', component: ConditionalExample, desc: 'Conditional rendering' },
             { title: 'List Example', component: ListExample, desc: 'Rendering lists with keys' },
             { title: 'Form Validation', component: FormValidation, desc: 'Controlled form + simple validation' },
@@ -52,7 +57,9 @@ function Example() {
                 title: 'Buggy Component',
                 component: () => (
                     <ErrorBoundary>
+                        <BuggyComponent error={false} />
                         <BuggyComponent error={true} />
+                        <BuggyComponent error={false} />
                     </ErrorBoundary>
                 ),
                 desc: 'Error boundary demo (component throws)'

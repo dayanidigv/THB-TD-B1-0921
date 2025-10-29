@@ -1,7 +1,14 @@
-import React from 'react';
+
+import React, {useEffect} from 'react';
 
 export default function ControlledInput() {
   const [name, setName] = React.useState("");
+
+useEffect(() => {
+  if (name[name.length - 1] === "a") {
+    setName(name.replace(/a+$/, '@'));
+  }
+}, [name]);
 
   return (
     <div>

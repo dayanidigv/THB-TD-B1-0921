@@ -28,3 +28,7 @@ export default class ErrorBoundary extends React.Component {
     return this.props.children;
   }
 }
+// this.props.children = <BuggyComponent error={false} />
+//                         <BuggyComponent error={false} />
+//                         <BuggyComponent error={false} />
+//                         <BuggyComponent error={false} />
