@@ -23,6 +23,9 @@ import UncontrolledInput from '../Component/Examples/011_Uncontrolled/Uncontroll
 import EventExample from '../Component/Examples/012_EventHandling/EventExample';
 import ErrorBoundary from '../Component/Examples/013_ErrorBoundary/ErrorBoundary';
 import BuggyComponent from '../Component/Examples/013_ErrorBoundary/BuggyComponent';
+import LocalStorageExample from '../Component/Examples/014_LocalStorage/LocalStorageExample';
+import SessionStorageExample from '../Component/Examples/015_SessionStorage/SessionStorageExample';
+import CookieExample from '../Component/Examples/016_Cookie/CookieExample';
 
 
 
@@ -53,6 +56,9 @@ function Example() {
             { title: 'Controlled Input', component: ControlledInput, desc: 'Controlled input example' },
             { title: 'Uncontrolled Input', component: UncontrolledInput, desc: 'Uncontrolled input using ref' },
             { title: 'Event Example', component: EventExample, desc: 'Handling events (click)' },
+            { title: 'LocalStorage Example', component: LocalStorageExample, desc: 'Using localStorage to persist simple data' },
+            { title: 'SessionStorage Example', component: SessionStorageExample, desc: 'Using sessionStorage to persist data for a session' },
+            { title: 'Cookie Example', component: CookieExample, desc: 'Basic cookie read/write demo' },
             {
                 title: 'Buggy Component',
                 component: () => (
