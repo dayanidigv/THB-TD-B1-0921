@@ -1,0 +1,25 @@
+{
+  "name": "nodejs-http-server",
+  "version": "1.0.0",
+  "description": "Learning Node.js HTTP servers and Express",
+  "main": "01-basic-server.js",
+  "scripts": {
+    "basic": "node 01-basic-server.js",
+    "routes": "node 02-http-routes.js",
+    "static": "node 03-static-files.js",
+    "express": "node 04-express-basic.js",
+    "middleware": "node 05-express-middleware.js"
+  },
+  "keywords": [
+    "nodejs",
+    "http",
+    "express",
+    "server",
+    "learning"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.22.1"
+  }
+}

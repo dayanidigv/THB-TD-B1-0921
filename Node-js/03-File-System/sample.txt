@@ -1,0 +1,14 @@
+This is a sample text file for learning Node.js file operations.
+
+Node.js makes it easy to work with files!
+
+You can:
+- Read files (text, binary, JSON)
+- Write files
+- Append to files
+- Delete files
+- Rename files
+- Create directories
+- And much more!
+
+Happy learning! 🚀

@@ -1,0 +1,21 @@
+{
+  "name": "nodejs-modules-demo",
+  "version": "1.0.0",
+  "description": "Learning Node.js modules - CommonJS and ES6",
+  "main": "02-using-modules.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node 02-using-modules.js",
+    "start:es6": "node 04-using-es6-modules.mjs",
+    "test": "echo \"No tests yet\""
+  },
+  "keywords": [
+    "nodejs",
+    "modules",
+    "commonjs",
+    "es6",
+    "learning"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}

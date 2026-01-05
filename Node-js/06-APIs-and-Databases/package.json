@@ -1,0 +1,36 @@
+{
+  "name": "nodejs-apis-databases",
+  "version": "1.0.0",
+  "description": "Learning Node.js APIs and Database Integration",
+  "main": "02-rest-api.js",
+  "scripts": {
+    "api": "node 02-rest-api.js",
+    "requests": "node 01-http-requests.js",
+    "mongodb-basics": "node 03-mongodb-basics.js",
+    "mongoose": "node 04-mongoose-example.js",
+    "mongodb-api": "node 05-mongodb-crud-api.js"
+  },
+  "keywords": [
+    "nodejs",
+    "api",
+    "rest",
+    "database",
+    "mongodb",
+    "mongoose",
+    "mysql",
+    "postgresql"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {
+    "mongodb": "^5.0.0",
+    "mongoose": "^7.0.0",
+    "mysql2": "^3.0.0",
+    "pg": "^8.10.0",
+    "better-sqlite3": "^8.0.0"
+  }
+}
