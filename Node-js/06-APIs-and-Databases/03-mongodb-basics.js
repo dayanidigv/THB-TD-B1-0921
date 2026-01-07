@@ -16,27 +16,31 @@ async function main() {
     console.log("✅ Connected to MongoDB!\n");
 
     const db = client.db("nodejs_db");
+
     const users = db.collection("users");
 
     // 1. Insert
-    const user = { name: "Alice", age: 25, email: "alice@example.com" };
-    const result = await users.insertOne(user);
-    console.log("1. Inserted:", result.insertedId);
+    // const user = { name: "Alice", age: 25, email: "alice@example.com" };
+
+    // const result = await users.insertOne(user);
+    // console.log(result);
+    // console.log("1. Inserted:", result.insertedId);
 
     // 2. Find All
-    const allUsers = await users.find({}).toArray();
-    console.log("\n2. All users:", allUsers.length);
+    // const allUsers = await users.find({}).toArray();
+    // console.log("\n2. All users:", allUsers.length);
 
     // 3. Find One
-    const foundUser = await users.findOne({ name: "Alice" });
-    console.log("\n3. Found:", foundUser?.name);
+    // const foundUser = await users.findOne({ role: "admin" });
+    // console.log("\n3. Found:", foundUser?.name);
 
     // 4. Update
-    await users.updateOne(
-      { name: "Alice" },
-      { $set: { age: 26 } }
-    );
-    console.log("\n4. Updated age");
+    // TODO
+    // await users.updateOne(
+    //   { name: "Alice" },
+    //   { $set: { age: 26 } }
+    // );
+    // console.log("\n4. Updated age");
 
     // 5. Delete
     await users.deleteOne({ name: "Alice" });

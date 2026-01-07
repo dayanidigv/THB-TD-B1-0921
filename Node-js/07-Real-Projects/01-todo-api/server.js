@@ -16,7 +16,11 @@ app.use(express.json());
 // Logger
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+  if (req.url === "/") {
+     res.json({message: "GO"});
+  } else {
   next();
+  }
 });
 
 // ==========================================

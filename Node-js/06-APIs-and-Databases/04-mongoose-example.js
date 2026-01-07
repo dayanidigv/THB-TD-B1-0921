@@ -27,27 +27,27 @@ async function main() {
 
     // 1. Create
     const user = await User.create({
-      name: "Bob",
+      name: "Daya",
       email: "bob@example.com",
-      age: 30,
+      age: 10,
     });
     console.log("1. Created:", user.name);
 
     // 2. Find All
-    const users = await User.find({});
-    console.log("\n2. All users:", users.length);
+    // const users = await User.find({});
+    // console.log("\n2. All users:", users.length);
 
     // 3. Find One
-    const foundUser = await User.findOne({ name: "Bob" });
-    console.log("\n3. Found:", foundUser?.email);
+    // const foundUser = await User.findOne({ name: "Bob" });
+    // console.log("\n3. Found:", foundUser?.email);
 
     // 4. Update
-    await User.updateOne({ name: "Bob" }, { age: 31 });
-    console.log("\n4. Updated");
+    // await User.updateOne({ name: "Bob" }, { age: 31 });
+    // console.log("\n4. Updated");
 
     // 5. Delete
-    await User.deleteOne({ name: "Bob" });
-    console.log("\n5. Deleted");
+    // await User.deleteOne({ name: "Bob" });
+    // console.log("\n5. Deleted");
 
     console.log("\n✅ Done!");
   } catch (err) {

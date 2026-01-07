@@ -63,6 +63,9 @@
    - Reporting and analytics
    - Multiple table joins
 
+- Your data is structured and must be correct. Period.
+> If you ever say “rollback”, “transaction”, or “audit trail” — SQL.
+
 ### 📝 SQL Example
 
 ```sql
@@ -104,6 +107,9 @@ ORDER BY orders.order_date DESC;
    - Nested data structures
    - Document-oriented
    - Example: Blog posts with comments
+
+- Your system must scale fast and stay available.
+> If you say “millions of users”, “real-time”, or “schema keeps changing” — NoSQL.
 
 ### 📝 NoSQL (MongoDB) Example
 
