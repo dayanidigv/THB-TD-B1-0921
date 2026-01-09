@@ -1,0 +1,17 @@
+Alice - quantity (1) * price (1000) = 1000
+Alice - quantity (1) * price (75).  = 75
+     totalSpent: 1075
+     OrderCount: 2
+
+Bob - quantity (2) * price (25) = 50
+Bob - quantity (1) * price (1000) = 1000
+     totalSpent: 1050
+     OrderCount: 2
+
+Diana - quantity (5) * price (25) = 125
+     totalSpent: 125
+     OrderCount: 1
+
+Charlie - quantity (2) * price (300) = 600
+     totalSpent: 600
+     OrderCount: 1
