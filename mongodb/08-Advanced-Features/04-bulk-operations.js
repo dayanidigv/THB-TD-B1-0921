@@ -1,10 +1,10 @@
 // ==========================================
 // BULK OPERATIONS
 // ==========================================
-
+require("dotenv").config();
 const { MongoClient } = require("mongodb");
 
-const uri = "mongodb://localhost:27017";
+const uri = process.env.DB_URL;
 const client = new MongoClient(uri);
 
 async function bulkOperationsExamples() {
@@ -100,6 +100,7 @@ async function bulkOperationsExamples() {
 
     // ERROR HANDLING
     console.log("\n=== ERROR HANDLING ===");
+    console.log("before error:", await products.countDocuments());
     
     try {
       await products.bulkWrite([
@@ -110,8 +111,40 @@ async function bulkOperationsExamples() {
       ]);
     } catch (error) {
       console.log("❌ Bulk operation had errors");
-      console.log(`Inserted before error: ${error.result?.nInserted || 0}`);
+      console.log(`Error message: ${error}`); 
     }
+    console.log("after error:", await products.countDocuments());
+
+
+    // BATCH INSERT
+    console.log("\n=== BATCH INSERT ===");
+    await products.deleteMany({});
+
+    const unBatchData = [];
+    for (let i = 1; i <= 100; i++) {
+      unBatchData.push({ name: `Item ${i}`, price: i * 10 });
+    }
+
+    const unBatchResult = await products.insertMany(unBatchData);
+    console.log(`Inserted ${unBatchResult.insertedCount} documents in batch`);
+
+    // ERROR HANDLING
+    console.log("\n=== ERROR HANDLING ===");
+    console.log("before error:", await products.countDocuments());
+    
+    try {
+      await products.bulkWrite([
+        { insertOne: { document: { name: "Test1" } } },
+        { insertOne: { document: { _id: "duplicate" } } },
+        { insertOne: { document: { _id: "duplicate" } } }, // This will fail
+        { insertOne: { document: { name: "Test2" } } }
+      ], { ordered: false });
+    } catch (error) {
+      console.log("❌ Bulk operation had errors");
+      console.log(`Error message: ${error}`); 
+    }
+    console.log("after error:", await products.countDocuments());
+
 
     // PERFORMANCE BENEFITS
     console.log("\n=== PERFORMANCE BENEFITS ===");

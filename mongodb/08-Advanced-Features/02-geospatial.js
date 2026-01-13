@@ -1,10 +1,10 @@
 // ==========================================
 // GEOSPATIAL QUERIES
 // ==========================================
-
+require("dotenv").config();
 const { MongoClient } = require("mongodb");
 
-const uri = "mongodb://localhost:27017";
+const uri = process.env.DB_URL;
 const client = new MongoClient(uri);
 
 async function geospatialExamples() {
@@ -69,11 +69,14 @@ async function geospatialExamples() {
     const withinRadius = await places.find({
       location: {
         $geoWithin: {
-          $centerSphere: [[-73.9712, 40.7831], 10 / 6378.1] // 10km radius
+          $centerSphere: [[-73.9712, 40.7831], 5 / 6378.1] // 10km radius
         }
       }
+      // Earth radius value: 6378.1 km
     }).toArray();
+  
     console.log(`Within 10km: ${withinRadius.length} places`);
+    withinRadius.forEach(p => console.log(`- ${p.name}`));
 
     // FIND WITHIN POLYGON
     console.log("\n=== WITHIN POLYGON ($geoWithin) ===");
@@ -83,11 +86,11 @@ async function geospatialExamples() {
           $geometry: {
             type: "Polygon",
             coordinates: [[
-              [-74.05, 40.70], // Southwest
-              [-73.95, 40.70], // Southeast
-              [-73.95, 40.80], // Northeast
-              [-74.05, 40.80], // Northwest
-              [-74.05, 40.70]  // Close the polygon
+              [-74.05, 40.68], // Southwest
+              [-73.99, 40.68], // Southeast
+              [-73.99, 40.725], // Northeast
+              [-74.05, 40.725], // Northwest
+              [-74.05, 40.68]  // Close the polygon
             ]]
           }
         }
@@ -125,7 +128,7 @@ async function geospatialExamples() {
       location: {
         $near: {
           $geometry: { type: "Point", coordinates: [-73.9857, 40.7484] },
-          $maxDistance: 3000
+          $maxDistance: 5000
         }
       }
     }).toArray();

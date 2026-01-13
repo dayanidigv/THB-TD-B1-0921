@@ -1,11 +1,16 @@
 // ==========================================
 // TTL INDEX (Time To Live)
 // ==========================================
-
+require("dotenv").config();
 const { MongoClient } = require("mongodb");
 
-const uri = "mongodb://localhost:27017";
+const uri = process.env.DB_URL;
 const client = new MongoClient(uri);
+
+// Sleep utility function
+function sleep(seconds) {
+  return new Promise(resolve => setTimeout(resolve, seconds * 1000));
+}
 
 async function ttlIndexExamples() {
   try {
@@ -15,20 +20,25 @@ async function ttlIndexExamples() {
     const db = client.db("learn_db");
     
     // SESSION MANAGEMENT
-    console.log("=== SESSION TTL (60 seconds) ===");
+    console.log("=== SESSION TTL (50 seconds) ===");
     const sessions = db.collection("sessions");
     await sessions.deleteMany({});
 
-    // Create TTL index (expires after 60 seconds)
-    await sessions.createIndex({ createdAt: 1 }, { expireAfterSeconds: 60 });
+    // Create TTL index (expires after 50 seconds)
+    await sessions.createIndex({ createdAt: 1 }, { expireAfterSeconds: 50 });
 
     await sessions.insertMany([
       { userId: "user123", token: "abc123", createdAt: new Date() },
       { userId: "user456", token: "def456", createdAt: new Date() }
     ]);
 
-    console.log("✅ Created 2 sessions (will expire in 60 seconds)");
+    console.log("✅ Created 2 sessions (will expire in 50 seconds)");
     console.log("Current count:", await sessions.countDocuments());
+    
+    console.log("⏳ Waiting 70 seconds to see TTL deletion...");
+    await sleep(70);
+    console.log("After 70 seconds - count:", await sessions.countDocuments());
+    console.log("✅ Sessions expired and deleted by TTL!");
 
     // CACHE WITH TTL
     console.log("\n=== CACHE TTL (5 minutes) ===");
@@ -102,3 +112,22 @@ async function ttlIndexExamples() {
 }
 
 ttlIndexExamples();
+
+// ==========================================
+// USE CASES FOR TTL INDEXES
+// ==========================================
+`
+User sessions - auto-expire login sessions and refresh tokens
+OTP / verification codes - email, SMS, password reset codes
+API cache - temporary cached responses or computed data
+Temporary logs - debug, error, or audit logs
+Rate limiting - reset API request counters automatically
+Security tokens - password reset, account recovery links
+Temporary notifications - alerts that expire after some time
+Background jobs - expire stuck or outdated jobs
+Upload metadata - temporary file upload records
+Analytics buffers - short-lived metrics or sampling data
+
+One rule to remember:
+If data has an expiry time, use TTL.
+`

@@ -1,10 +1,10 @@
 // ==========================================
 // TEXT SEARCH
 // ==========================================
-
+require("dotenv").config();
 const { MongoClient } = require("mongodb");
 
-const uri = "mongodb://localhost:27017";
+const uri = process.env.DB_URL;
 const client = new MongoClient(uri);
 
 async function textSearchExamples() {
@@ -25,7 +25,7 @@ async function textSearchExamples() {
       { title: "MongoDB Guide", content: "Complete MongoDB database reference and tutorial" },
       { title: "React Basics", content: "Introduction to React framework for beginners" },
       { title: "MongoDB Indexing", content: "How to create and optimize indexes in MongoDB" },
-      { title: "Node.js Advanced", content: "Advanced Node.js patterns and best practices" }
+      { title: "Advanced", content: "Advanced Node.js patterns and best practices" }
     ]);
 
     // Simple search
