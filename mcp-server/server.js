@@ -258,6 +258,64 @@ server.prompt(
   })
 )
 
+// Resource: MongoDB Query Examples
+server.resource(
+  "mongo_examples",
+  "MongoDB query examples and common operations",
+  "application/json",
+  async () => ({
+    contents: [
+      {
+        uri: "mongo://examples/queries",
+        mimeType: "application/json",
+        text: JSON.stringify({
+          find_examples: {
+            all_documents: '{}',
+            equals: '{"name": "John"}',
+            greater_than: '{"age": {"$gt": 25}}',
+            less_than: '{"age": {"$lt": 30}}',
+            in_array: '{"status": {"$in": ["active", "pending"]}}',
+            regex: '{"name": {"$regex": "^J", "$options": "i"}}',
+            and: '{"$and": [{"age": {"$gt": 20}}, {"status": "active"}]}',
+            or: '{"$or": [{"age": {"$gt": 60}}, {"age": {"$lt": 18}}]}'
+          },
+          update_examples: {
+            set_field: '{"$set": {"age": 30}}',
+            increment: '{"$inc": {"count": 1}}',
+            push_to_array: '{"$push": {"tags": "mongodb"}}',
+            unset_field: '{"$unset": {"oldField": ""}}',
+            rename_field: '{"$rename": {"oldName": "newName"}}'
+          },
+          aggregation_examples: {
+            group_and_count: '[{"$group": {"_id": "$category", "count": {"$sum": 1}}}]',
+            sort: '[{"$sort": {"age": -1}}]',
+            match_and_project: '[{"$match": {"age": {"$gt": 25}}}, {"$project": {"name": 1, "age": 1}}]',
+            avg_calculation: '[{"$group": {"_id": null, "avgAge": {"$avg": "$age"}}}]'
+          }
+        }, null, 2)
+      }
+    ]
+  })
+)
+
+// Resource: MongoDB Connection Info
+server.resource(
+  "mongo_connection_info",
+  "Current MongoDB connection information",
+  "text/plain",
+  async () => ({
+    contents: [
+      {
+        uri: "mongo://info/connection",
+        mimeType: "text/plain",
+        text: db 
+          ? `Connected to: ${db.databaseName}\nStatus: Active` 
+          : "Not connected. Use mongo_connect tool to connect."
+      }
+    ]
+  })
+)
+
 const transport = new StdioServerTransport()
 await server.connect(transport)
 
@@ -268,3 +326,13 @@ process.on("SIGINT", async () => {
   }
   process.exit(0)
 })
+
+
+// {  
+//   "mcpServers": {
+//     "mongodb": {
+//       "command": "node",
+//       "args": ["/Users/daya/Daya/UI/TD-B1-0921/mcp-server/server.js"]
+//     }
+//   }
+// }
