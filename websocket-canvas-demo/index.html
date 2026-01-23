@@ -3,179 +3,512 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Real-time collaborative drawing canvas">
   <title>WebSocket Canvas - Collaborative Drawing</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
       text-align: center;
       padding: 20px;
-      background: #f5f5f5;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #333;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
     }
 
     h1 {
-      font-size: 24px;
+      font-size: 28px;
       margin-bottom: 10px;
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
     }
 
-    p {
-      color: #666;
+    .subtitle {
+      color: rgba(255,255,255,0.9);
       margin-bottom: 20px;
+      font-size: 16px;
     }
 
     #userList {
       display: inline-block;
       text-align: left;
-      margin-bottom: 15px;
-      padding: 10px 20px;
+      margin-bottom: 20px;
+      padding: 15px 25px;
       background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      min-width: 200px;
     }
 
     #userList h3 {
-      margin: 0 0 10px 0;
+      margin: 0 0 12px 0;
       font-size: 14px;
       color: #666;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .user-item {
-      padding: 5px 0;
+      padding: 6px 0;
       font-size: 14px;
+      display: flex;
+      align-items: center;
     }
 
     .user-color {
-      display: inline-block;
-      width: 12px;
-      height: 12px;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
-      margin-right: 8px;
+      margin-right: 10px;
+      border: 2px solid rgba(0,0,0,0.1);
+    }
+
+    .canvas-container {
+      background: white;
+      border-radius: 12px;
+      padding: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      display: inline-block;
+      margin-bottom: 20px;
     }
 
     #canvas {
-      border: 2px solid #333;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
       background: white;
       cursor: crosshair;
       display: block;
-      margin: 0 auto;
+      touch-action: none;
     }
 
     #status {
       margin-top: 15px;
       font-size: 14px;
-      padding: 8px;
+      padding: 10px 20px;
+      border-radius: 20px;
+      display: inline-block;
+      font-weight: 600;
+      transition: all 0.3s ease;
     }
 
     .connected {
-      color: green;
+      background: #10b981;
+      color: white;
+    }
+
+    .connecting {
+      background: #f59e0b;
+      color: white;
     }
 
     .disconnected {
-      color: red;
+      background: #ef4444;
+      color: white;
+    }
+
+    .error-message {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 12px 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .controls {
+      margin: 20px 0;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background: white;
+      color: #667eea;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    @media (max-width: 640px) {
+      #canvas {
+        max-width: 100%;
+        height: auto;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      .subtitle {
+        font-size: 14px;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Collaborative Canvas Drawing</h1>
-  <p>Open multiple tabs and draw - everyone sees it in real time!</p>
+  <div class="container">
+    <h1>🎨 Collaborative Canvas Drawing</h1>
+    <p class="subtitle">Open multiple tabs and draw - everyone sees it in real time!</p>
 
-  <div id="userList">
-    <h3>👥 Connected Users (<span id="userCount">0</span>)</h3>
-    <div id="users"></div>
+    <div id="errorMessage" class="error-message"></div>
+
+    <div id="userList">
+      <h3>👥 Connected (<span id="userCount">0</span>)</h3>
+      <div id="users"></div>
+    </div>
+
+    <div class="canvas-container">
+      <canvas id="canvas" width="600" height="400"></canvas>
+    </div>
+
+    <div class="controls">
+      <button id="clearBtn">Clear Canvas</button>
+      <button id="reconnectBtn" style="display: none;">Reconnect</button>
+    </div>
+
+    <div id="status" class="disconnected">Disconnected</div>
   </div>
 
-  <canvas id="canvas" width="600" height="400"></canvas>
-
-  <div id="status" class="disconnected">Disconnected</div>
-
-  <script src="config.js"></script>
   <script>
-    let userName = prompt("Enter your name:") || "Anonymous";
+    // Configuration
+    const RECONNECT_DELAY = 3000;
+    const MAX_RECONNECT_ATTEMPTS = 5;
+    const THROTTLE_DELAY = 16; // ~60fps
 
-    const canvas = document.getElementById("canvas");
-    const ctx = canvas.getContext("2d");
-    const statusDisplay = document.getElementById("status");
-    const userCountDisplay = document.getElementById("userCount");
-    const usersDisplay = document.getElementById("users");
-
+    // State
+    let userName = null;
+    let myColor = '#000';
+    let ws = null;
     let drawing = false;
-    let myColor = "#000";
-    let ws;
+    let reconnectAttempts = 0;
+    let reconnectTimeout = null;
+    let lastSendTime = 0;
 
-    // Initialize WebSocket connection
-    async function init() {
-      statusDisplay.textContent = "Connecting...";
+    // DOM elements
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const statusDisplay = document.getElementById('status');
+    const userCountDisplay = document.getElementById('userCount');
+    const usersDisplay = document.getElementById('users');
+    const errorMessage = document.getElementById('errorMessage');
+    const clearBtn = document.getElementById('clearBtn');
+    const reconnectBtn = document.getElementById('reconnectBtn');
+
+    // Canvas setup
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    // Get WebSocket URL from server config endpoint
+    async function getWebSocketUrl() {
+      const isDevelopment = window.location.hostname === 'localhost' || 
+                           window.location.hostname === '127.0.0.1';
       
-      // Get WebSocket URL from config
-      const wsUrl = await getWebSocketUrl();
-      ws = new WebSocket(wsUrl);
+      // Fallback URLs
+      const devUrl = `ws://${window.location.hostname}:8080/ws`;
+      const prodUrl = `wss://${window.location.host}/ws`;
       
-      setupWebSocket();
+      try {
+        // Try to fetch config from server
+        const baseUrl = isDevelopment 
+          ? `http://${window.location.hostname}:8080`
+          : `https://${window.location.host}`;
+        
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5s timeout
+        
+        const response = await fetch(`${baseUrl}/config`, {
+          signal: controller.signal,
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+        
+        clearTimeout(timeoutId);
+        
+        if (!response.ok) {
+          throw new Error(`Config fetch failed: ${response.status}`);
+        }
+        
+        const config = await response.json();
+        
+        if (!config.wsUrl) {
+          throw new Error('Invalid config response: missing wsUrl');
+        }
+        
+        console.log('WebSocket URL from config:', config.wsUrl);
+        return config.wsUrl;
+        
+      } catch (error) {
+        console.warn('Failed to fetch config, using fallback:', error.message);
+        
+        // Use environment-based fallback
+        const fallbackUrl = isDevelopment ? devUrl : prodUrl;
+        console.log('Using fallback WebSocket URL:', fallbackUrl);
+        
+        return fallbackUrl;
+      }
+    }
+
+    // Utility functions
+    function showError(message) {
+      errorMessage.textContent = message;
+      errorMessage.style.display = 'block';
+      setTimeout(() => {
+        errorMessage.style.display = 'none';
+      }, 5000);
+    }
+
+    function updateStatus(status, className) {
+      statusDisplay.textContent = status;
+      statusDisplay.className = className;
+    }
+
+    function throttle(func, delay) {
+      let lastCall = 0;
+      return function(...args) {
+        const now = Date.now();
+        if (now - lastCall >= delay) {
+          lastCall = now;
+          func.apply(this, args);
+        }
+      };
+    }
+
+    // WebSocket functions
+    async function connect() {
+      try {
+        updateStatus('Connecting...', 'connecting');
+        
+        const wsUrl = await getWebSocketUrl();
+        ws = new WebSocket(wsUrl);
+        
+        setupWebSocket();
+      } catch (error) {
+        console.error('Connection error:', error);
+        showError('Failed to connect. Retrying...');
+        scheduleReconnect();
+      }
     }
 
     function setupWebSocket() {
-      // WebSocket events
       ws.onopen = () => {
-        statusDisplay.textContent = "Connected";
-        statusDisplay.className = "connected";
-        // Send user name to server
-        ws.send(JSON.stringify({ type: "join", name: userName }));
-      };
-
-      ws.onmessage = (e) => {
-        const data = JSON.parse(e.data);
+        updateStatus('Connected', 'connected');
+        reconnectAttempts = 0;
+        reconnectBtn.style.display = 'none';
         
-        if (data.type === "color") {
-          myColor = data.color;
-        } else if (data.type === "draw") {
-          draw(data.x, data.y, data.color);
-        } else if (data.type === "users") {
-          userCountDisplay.textContent = data.count;
-          
-          // Update user list
-          usersDisplay.innerHTML = data.users.map(user => 
-            `<div class="user-item">
-              <span class="user-color" style="background: ${user.color};"></span>
-              ${user.name}
-            </div>`
-          ).join("");
+        // Send join message
+        if (userName) {
+          safeSend({ type: 'join', name: userName });
         }
       };
 
-      ws.onclose = () => {
-        statusDisplay.textContent = "Disconnected";
-        statusDisplay.className = "disconnected";
+      ws.onmessage = (e) => {
+        try {
+          const data = JSON.parse(e.data);
+          handleMessage(data);
+        } catch (error) {
+          console.error('Error parsing message:', error);
+        }
+      };
+
+      ws.onclose = (event) => {
+        updateStatus('Disconnected', 'disconnected');
+        console.log('WebSocket closed:', event.code, event.reason);
+        
+        if (event.code !== 1000) { // Not a normal closure
+          scheduleReconnect();
+        }
       };
 
       ws.onerror = (error) => {
-        console.error("WebSocket error:", error);
+        console.error('WebSocket error:', error);
+        showError('Connection error occurred');
       };
     }
 
-    // Mouse events
-    canvas.onmousedown = () => (drawing = true);
-    canvas.onmouseup = () => (drawing = false);
-    canvas.onmouseleave = () => (drawing = false);
-
-    canvas.onmousemove = (e) => {
-      if (!drawing || !ws) return;
-
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      draw(x, y, myColor);
-
-      // Send coordinates with color to server
-      ws.send(JSON.stringify({ type: "draw", x, y, color: myColor }));
-    };
-
-    function draw(x, y, color) {
-      ctx.fillStyle = color;
-      ctx.fillRect(x - 1, y - 1, 3, 3);
+    function handleMessage(data) {
+      switch(data.type) {
+        case 'color':
+          myColor = data.color;
+          break;
+          
+        case 'draw':
+          draw(data.x, data.y, data.color);
+          break;
+          
+        case 'users':
+          userCountDisplay.textContent = data.count;
+          usersDisplay.innerHTML = data.users.map(user => 
+            `<div class="user-item">
+              <span class="user-color" style="background: ${escapeHtml(user.color)};"></span>
+              ${escapeHtml(user.name)}
+            </div>`
+          ).join('');
+          break;
+      }
     }
 
-    // Initialize app
+    function safeSend(data) {
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        try {
+          ws.send(JSON.stringify(data));
+        } catch (error) {
+          console.error('Error sending message:', error);
+        }
+      }
+    }
+
+    function scheduleReconnect() {
+      if (reconnectAttempts >= MAX_RECONNECT_ATTEMPTS) {
+        showError('Connection lost. Click Reconnect to try again.');
+        reconnectBtn.style.display = 'inline-block';
+        return;
+      }
+
+      reconnectAttempts++;
+      const delay = RECONNECT_DELAY * reconnectAttempts;
+      
+      console.log(`Reconnecting in ${delay}ms (attempt ${reconnectAttempts}/${MAX_RECONNECT_ATTEMPTS})`);
+      
+      clearTimeout(reconnectTimeout);
+      reconnectTimeout = setTimeout(connect, delay);
+    }
+
+    // Drawing functions
+    function draw(x, y, color) {
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(x, y, 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    const throttledDraw = throttle((x, y) => {
+      if (!ws || ws.readyState !== WebSocket.OPEN) return;
+      
+      draw(x, y, myColor);
+      safeSend({ type: 'draw', x, y, color: myColor });
+    }, THROTTLE_DELAY);
+
+    function getCanvasCoords(e) {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      
+      let clientX, clientY;
+      
+      if (e.touches && e.touches.length > 0) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+      } else {
+        clientX = e.clientX;
+        clientY = e.clientY;
+      }
+      
+      return {
+        x: (clientX - rect.left) * scaleX,
+        y: (clientY - rect.top) * scaleY
+      };
+    }
+
+    // Event handlers
+    function startDrawing(e) {
+      e.preventDefault();
+      drawing = true;
+      const coords = getCanvasCoords(e);
+      throttledDraw(coords.x, coords.y);
+    }
+
+    function stopDrawing(e) {
+      e.preventDefault();
+      drawing = false;
+    }
+
+    function handleDrawing(e) {
+      e.preventDefault();
+      if (!drawing) return;
+      
+      const coords = getCanvasCoords(e);
+      throttledDraw(coords.x, coords.y);
+    }
+
+    // Mouse events
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mouseleave', stopDrawing);
+    canvas.addEventListener('mousemove', handleDrawing);
+
+    // Touch events
+    canvas.addEventListener('touchstart', startDrawing);
+    canvas.addEventListener('touchend', stopDrawing);
+    canvas.addEventListener('touchcancel', stopDrawing);
+    canvas.addEventListener('touchmove', handleDrawing);
+
+    // Button handlers
+    clearBtn.addEventListener('click', () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+
+    reconnectBtn.addEventListener('click', () => {
+      reconnectAttempts = 0;
+      reconnectBtn.style.display = 'none';
+      connect();
+    });
+
+    // Utility
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Initialize
+    function init() {
+      userName = prompt('Enter your name:');
+      
+      if (!userName) {
+        userName = 'Anonymous';
+      }
+      
+      userName = userName.trim().substring(0, 50);
+      
+      connect();
+    }
+
+    // Start the app
     init();
+
+    // Cleanup on page unload
+    window.addEventListener('beforeunload', () => {
+      if (ws) {
+        ws.close(1000, 'User leaving');
+      }
+    });
   </script>
 </body>
 </html>
