@@ -6,14 +6,16 @@ async function getWebSocketUrl() {
     // Determine base URL
     const baseUrl = window.location.hostname === 'localhost'
       ? 'http://localhost:8080'
-      : window.location.origin;
+      : 'https://websocket-canvas-demo.onrender.com';
     
     const response = await fetch(`${baseUrl}/config`);
     const config = await response.json();
     return config.wsUrl;
   } catch (error) {
     console.error('Failed to fetch config, using fallback:', error);
-    // Fallback to local if config fetch fails
-    return 'wss://websocket-canvas-demo.onrender.com';
+    // Fallback based on environment
+    return window.location.hostname === 'localhost'
+      ? 'ws://localhost:8080/ws'
+      : 'wss://websocket-canvas-demo.onrender.com/ws';
   }
 }
