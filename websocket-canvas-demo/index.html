@@ -87,11 +87,11 @@
 
   <div id="status" class="disconnected">Disconnected</div>
 
+  <script src="config.js"></script>
   <script>
     // Ask for user name
     let userName = prompt("Enter your name:") || "Anonymous";
 
-    const ws = new WebSocket("ws://localhost:8080");
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
     const statusDisplay = document.getElementById("status");
@@ -100,6 +100,58 @@
 
     let drawing = false;
     let myColor = "#000";
+    let ws;
+
+    // Initialize WebSocket connection
+    async function init() {
+      statusDisplay.textContent = "Connecting...";
+      
+      // Get WebSocket URL from config
+      const wsUrl = await getWebSocketUrl();
+      ws = new WebSocket(wsUrl);
+      
+      setupWebSocket();
+    }
+
+    function setupWebSocket() {
+      // WebSocket events
+      ws.onopen = () => {
+        statusDisplay.textContent = "Connected";
+        statusDisplay.className = "connected";
+        
+        // Send user name to server
+        ws.send(JSON.stringify({ type: "join", name: userName }));
+      };
+
+      ws.onmessage = (e) => {
+        const data = JSON.parse(e.data);
+        
+        if (data.type === "color") {
+          myColor = data.color;
+        } else if (data.type === "draw") {
+          draw(data.x, data.y, data.color);
+        } else if (data.type === "users") {
+          userCountDisplay.textContent = data.count;
+          
+          // Update user list
+          usersDisplay.innerHTML = data.users.map(user => 
+            `<div class="user-item">
+              <span class="user-color" style="background: ${user.color};"></span>
+              ${user.name}
+            </div>`
+          ).join("");
+        }
+      };
+
+      ws.onclose = () => {
+        statusDisplay.textContent = "Disconnected";
+        statusDisplay.className = "disconnected";
+      };
+
+      ws.onerror = (error) => {
+        console.error("WebSocket error:", error);
+      };
+    }
 
     // Mouse events
     canvas.onmousedown = () => (drawing = true);
@@ -107,7 +159,7 @@
     canvas.onmouseleave = () => (drawing = false);
 
     canvas.onmousemove = (e) => {
-      if (!drawing) return;
+      if (!drawing || !ws) return;
 
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -119,48 +171,13 @@
       ws.send(JSON.stringify({ type: "draw", x, y, color: myColor }));
     };
 
-    // WebSocket events
-    ws.onopen = () => {
-      statusDisplay.textContent = "Connected";
-      statusDisplay.className = "connected";
-      
-      // Send user name to server
-      ws.send(JSON.stringify({ type: "join", name: userName }));
-    };
-
-    ws.onmessage = (e) => {
-      const data = JSON.parse(e.data);
-      
-      if (data.type === "color") {
-        myColor = data.color;
-      } else if (data.type === "draw") {
-        draw(data.x, data.y, data.color);
-      } else if (data.type === "users") {
-        userCountDisplay.textContent = data.count;
-        
-        // Update user list
-        usersDisplay.innerHTML = data.users.map(user => 
-          `<div class="user-item">
-            <span class="user-color" style="background: ${user.color};"></span>
-            ${user.name}
-          </div>`
-        ).join("");
-      }
-    };
-
-    ws.onclose = () => {
-      statusDisplay.textContent = "Disconnected";
-      statusDisplay.className = "disconnected";
-    };
-
-    ws.onerror = (error) => {
-      console.error("WebSocket error:", error);
-    };
-
     function draw(x, y, color) {
       ctx.fillStyle = color;
       ctx.fillRect(x - 1, y - 1, 3, 3);
     }
+
+    // Initialize app
+    init();
   </script>
 </body>
 </html>

@@ -1,6 +1,25 @@
 import { WebSocketServer } from "ws";
+import { createServer } from "http";
 
-const wss = new WebSocketServer({ port: 8080 });
+const PORT = process.env.PORT || 8080;
+const WS_SERVER_URL = process.env.WS_SERVER_URL || `ws://localhost:${PORT}`;
+
+// Create HTTP server for config endpoint
+const httpServer = createServer((req, res) => {
+  if (req.url === '/config' && req.method === 'GET') {
+    res.writeHead(200, {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    });
+    res.end(JSON.stringify({ wsUrl: WS_SERVER_URL }));
+  } else {
+    res.writeHead(404);
+    res.end('Not Found');
+  }
+});
+
+httpServer.listen(PORT);
+const wss = new WebSocketServer({ server: httpServer });
 
 const users = new Map();
 const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E2', '#F8B88B', '#AED6F1'];
@@ -58,9 +77,11 @@ wss.on("connection", (ws) => {
   ws.on("close", () => {
     const user = users.get(ws);
     users.delete(ws);
-    console.log(`${user?.name || "User"} disconnected. Total users: ${users.size}`);
+    console.log(`${user ? user.name : "User"} disconnected. Total users: ${users.size}`);
     broadcastUserList();
   });
 });
 
-console.log("WebSocket server running on ws://localhost:8080");
+console.log(`HTTP server running on http://localhost:${PORT}`);
+console.log(`WebSocket server running on ${WS_SERVER_URL}`);
+console.log(`Config endpoint available at http://localhost:${PORT}/config`);
