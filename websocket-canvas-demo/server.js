@@ -34,9 +34,12 @@ function broadcastUserList() {
   });
 }
 
+// Serve static files (for config.js)
+app.use(express.static(__dirname));
+
 // Express routes
 app.get('/', (req, res) => {
-  res.send('WebSocket Canvas Server is running!');
+  res.sendFile(__dirname + '/index.html');
 });
 
 app.get('/config', (req, res) => {
