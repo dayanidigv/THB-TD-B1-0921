@@ -27,7 +27,11 @@ Other clients draw the point
 ## Installation
 
 ```bash
+# Install dependencies
 npm install
+
+# Copy environment file
+cp .env.example .env
 ```
 
 ## Running the Demo
@@ -57,10 +61,14 @@ Open `index.html` in multiple browser tabs/windows:
 
 ```
 websocket-canvas-demo/
-├── server.js      # WebSocket server (broadcasts drawing data)
-├── index.html     # Canvas client (sends/receives coordinates)
-├── package.json   # Dependencies
-└── README.md      # This file
+├── server.js        # WebSocket server (broadcasts drawing data)
+├── index.html       # Canvas client (sends/receives coordinates)
+├── config.js        # WebSocket URL configuration
+├── .env.example     # Environment variables template
+├── .gitignore       # Git ignore file
+├── package.json     # Dependencies
+├── DEPLOYMENT.md    # Deployment guide
+└── README.md        # This file
 ```
 
 ## Key Concepts

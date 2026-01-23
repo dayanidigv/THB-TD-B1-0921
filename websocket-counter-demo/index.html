@@ -65,6 +65,7 @@
   <div id="counter">0</div>
   
   <button id="incrementBtn" onclick="incrementCounter()">Click Me</button>
+  <button id="decrementBtn" onclick="DCounter()">Decrement Me</button>
   
   <div id="status" class="disconnected">Disconnected</div>
 
@@ -73,6 +74,7 @@
     const counterDisplay = document.getElementById('counter');
     const statusDisplay = document.getElementById('status');
     const incrementBtn = document.getElementById('incrementBtn');
+    const decrementBtn = document.getElementById('decrementBtn');
 
     function connect() {
       ws = new WebSocket('ws://localhost:8080');
@@ -81,6 +83,7 @@
         statusDisplay.textContent = 'Connected';
         statusDisplay.className = 'connected';
         incrementBtn.disabled = false;
+        decrementBtn.disabled = false;
       };
 
       ws.onmessage = (event) => {
@@ -94,6 +97,7 @@
         statusDisplay.textContent = 'Disconnected';
         statusDisplay.className = 'disconnected';
         incrementBtn.disabled = true;
+        decrementBtn.disabled = true;
         setTimeout(connect, 2000);
       };
 
@@ -105,6 +109,12 @@
     function incrementCounter() {
       if (ws && ws.readyState === WebSocket.OPEN) {
         ws.send(JSON.stringify({ type: 'increment' }));
+      }
+    }
+
+  function DCounter() {
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({ type: 'decrement' }));
       }
     }
 

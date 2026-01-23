@@ -9,6 +9,16 @@ let counter = 0;
 // Store all connected clients
 const clients = new Set();
 
+
+function broadcastCounter() {
+  const message = JSON.stringify({ type: 'counter', value: counter });
+  clients.forEach((client) => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(message);
+    }
+  });
+}
+
 wss.on('connection', (ws) => {
   console.log('New client connected. Total clients:', clients.size + 1);
   
@@ -26,15 +36,12 @@ wss.on('connection', (ws) => {
       // Increment the counter
       counter++;
       console.log(`Counter incremented to ${counter} by a client`);
-      
-      // Broadcast the new counter value to ALL connected clients
-      const update = JSON.stringify({ type: 'counter', value: counter });
-      clients.forEach((client) => {
-        if (client.readyState === WebSocket.OPEN) {
-          client.send(update);
-        }
-      });
+    }else if (data.type === 'decrement') {
+      // Decrement the counter
+      counter--;
+      console.log(`Counter decremented to ${counter} by a client`);
     }
+    broadcastCounter();
   });
   
   // Handle client disconnect
