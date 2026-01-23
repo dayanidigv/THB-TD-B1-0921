@@ -14,6 +14,6 @@ async function getWebSocketUrl() {
   } catch (error) {
     console.error('Failed to fetch config, using fallback:', error);
     // Fallback to local if config fetch fails
-    return 'ws://localhost:8080';
+    return 'wss://websocket-canvas-demo.onrender.com';
   }
 }
