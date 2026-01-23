@@ -89,7 +89,6 @@
 
   <script src="config.js"></script>
   <script>
-    // Ask for user name
     let userName = prompt("Enter your name:") || "Anonymous";
 
     const canvas = document.getElementById("canvas");
@@ -118,7 +117,6 @@
       ws.onopen = () => {
         statusDisplay.textContent = "Connected";
         statusDisplay.className = "connected";
-        
         // Send user name to server
         ws.send(JSON.stringify({ type: "join", name: userName }));
       };
