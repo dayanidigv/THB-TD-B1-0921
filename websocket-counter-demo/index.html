@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebSocket Counter Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      background: #f5f5f5;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    #counter {
+      font-size: 72px;
+      font-weight: bold;
+      margin: 30px 0;
+      color: #333;
+    }
+
+    button {
+      padding: 12px 30px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    #status {
+      margin-top: 20px;
+      font-size: 14px;
+      padding: 8px;
+    }
+
+    .connected {
+      color: green;
+    }
+
+    .disconnected {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>WebSocket Counter</h1>
+  <p>Click the button - all tabs update instantly</p>
+  
+  <div id="counter">0</div>
+  
+  <button id="incrementBtn" onclick="incrementCounter()">Click Me</button>
+  
+  <div id="status" class="disconnected">Disconnected</div>
+
+  <script>
+    let ws;
+    const counterDisplay = document.getElementById('counter');
+    const statusDisplay = document.getElementById('status');
+    const incrementBtn = document.getElementById('incrementBtn');
+
+    function connect() {
+      ws = new WebSocket('ws://localhost:8080');
+
+      ws.onopen = () => {
+        statusDisplay.textContent = 'Connected';
+        statusDisplay.className = 'connected';
+        incrementBtn.disabled = false;
+      };
+
+      ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        if (data.type === 'counter') {
+          counterDisplay.textContent = data.value;
+        }
+      };
+
+      ws.onclose = () => {
+        statusDisplay.textContent = 'Disconnected';
+        statusDisplay.className = 'disconnected';
+        incrementBtn.disabled = true;
+        setTimeout(connect, 2000);
+      };
+
+      ws.onerror = (error) => {
+        console.error('WebSocket error:', error);
+      };
+    }
+
+    function incrementCounter() {
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({ type: 'increment' }));
+      }
+    }
+
+    connect();
+  </script>
+</body>
+</html>
